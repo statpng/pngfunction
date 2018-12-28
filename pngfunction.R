@@ -37,22 +37,33 @@ sp.glmnet <- function(x, y, psub=0.5, K=100, seq.alpha=NULL, n.lambda=NULL, fami
   n <- nrow(x);
   p <- ncol(x);
   nsub <- n*psub;
+
+  if( family=="binomial" ){
+  wc <- which(y==1)
+  wt <- which(y==0)
+  nc <- floor(length(wc) * psub)
+  nt <- floor(length(wt) * psub)
+  }
   
   vector.lambda <- NULL
   
+for( i in 1:10 ){
   for( j in 1:length(seq.alpha) ){
-    for( i in 1:10 ){
-      wsub <- sample(n, nsub)
+      if( family=="binomial" ){
+          wsub <- c(sample(wc, nc), sample(wt, nt))
+      } else {
+          wsub <- sample(n, nsub)
+      }
       xsub <- x[wsub,]
       ysub <- y[wsub,]
-      fitsub <- glmnet(x=xsub, y=ysub, alpha=seq.alpha[j], family=family, ... )
+      fitsub <- glmnet(x=xsub, y=ysub, alpha=seq.alpha[j], family=family)
       vector.lambda <- c( vector.lambda, fitsub$lambda )
     }
   }
   
-  lambda.min <- median(vector.lambda)
+  lambda.median <- median(vector.lambda)
   lambda.max <- max(vector.lambda)
-  seq.lambda <- seq(lambda.min, lambda.max, length.out=n.lambda);
+  seq.lambda <- seq(lambda.median, lambda.max, length.out=n.lambda);
   
   ncol.y <- length( append(fitsub$beta, NULL) )
 
@@ -60,7 +71,11 @@ sp.glmnet <- function(x, y, psub=0.5, K=100, seq.alpha=NULL, n.lambda=NULL, fami
 for( j in 1:length(seq.alpha) ){
     for( i in 1:K ){
         set.seed(2018*i)
-        wsub <- sample(n, nsub);
+      if( family=="binomial" ){
+          wsub <- c(sample(wc, nc), sample(wt, nt))
+      } else {
+          wsub <- sample(n, nsub)
+      }
         xsub <- x[wsub,];
         ysub <- y[wsub,];  
             
@@ -78,8 +93,8 @@ for( j in 1:length(seq.alpha) ){
         } 
   }
 }
-  
-  return(out, seq.lambda, seq.alpha );
+
+  return( list( sp = out, lambda=seq.lambda ) );
 }
 ####################################################
 
@@ -237,6 +252,7 @@ binom.glmnet.sp <- function(x, y, alpha, lambda=NULL, K=100, psub=0.5, nlamb=10)
   OUT <- as.list(1:N)
   for (i in 1:N) {
     print(i)
+    set.seed(2018*i)
     ss <- c(sample(wc, nc), sample(wt, nt))
     out <- as.list(1:length(alpha))
     for (a in 1:length(alpha)) {
@@ -286,6 +302,7 @@ gaussian.glmnet.sp <- function(x, y, alpha, lambda=NULL, K=100, psub=0.5, nlamb=
   N <- K
   for (i in 1:N) {
     print(paste0("Resampling for selection probability = ", i))
+set.seed(2018*i)
     ss <- sample(length(y), nsub)
     for (a in 1:length(alpha)) {
       g <- glmnet(x[ss,], y[ss], alpha=alpha[a], lambda=lambda, family="gaussian")
