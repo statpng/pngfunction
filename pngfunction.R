@@ -156,9 +156,9 @@ tpr.top <- function(sp, top, true){
 ####################################################
 png.GenSNP <- function(n, p, rho, threads=threads, display_progress=FALSE ){
   
-#  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_C(p=(p/20), rho=rho, threads=1,  display_progress=display_progress) ) ) )
+#  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, # varcov=ARCOV_C(p=(p/20), rho=rho, threads=1,  # display_progress=display_progress) ) ) )
 
-#  Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_C(p=(p/20), rho=rho, threads=1, display_progress=display_progress) ) ) )
+#  Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, # varcov=ARCOV_C(p=(p/20), rho=rho, threads=1, # display_progress=display_progress) ) ) )
 
   X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_R(p=(p/20), rho=rho, threads=1) ) ) )
 
