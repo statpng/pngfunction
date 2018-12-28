@@ -21,6 +21,7 @@ return( data.frame( expd, value=out ) )
 btob <- function(x, name) paste0( deparse(substitute(name)),"=",x[1],"to",x[length(x)] )
 ####################################################
 
+#binom.glmnet.sp, gaussian.glmnet.sp 결과 일치함.
 ####################################################
 sp.glmnet <- function(x, y, psub=0.5, K=100, seq.alpha=NULL, n.lambda=NULL, family="gaussian", type.mgaussian=NULL, ...){
   if( NROW(y) != nrow(x) ) stop("x and y should be equal length of row")
@@ -99,50 +100,6 @@ for( j in 1:length(seq.alpha) ){
 ####################################################
 
 ####################################################
-mglmnet.selprob <- function(SNP, Phenotype, idx=NULL, Alpha=NULL, nlambda=10, psub=0.5, K=100, cov=c("none","remainder","pc")){
-  if( NCOL(Phenotype)>1 & is.null(idx) ) stop("Include an integer of idx")
-  if( NCOL(Phenotype)==1 & !is.null(idx) ) stop("Include a data.frame or matrix of Phenotype")
-  
-  M <- ncol(Phenotype)
-  
-  n <- NROW(Phenotype);
-  nsub <- n*psub;
-  if(is.null(Alpha)) Alpha <- 1:9*0.1
-  
-
-  vector.lambda <- NULL
-  for( i in 1:10 ){
-    for( j in 1:length(Alpha) ){
-      wsub <- sample(n, nsub)
-      SNPsub <- SNP[wsub,]
-      Phenotypesub <- Phenotype[wsub, ]
-      fitsub <- mglmnet(x=SNPsub, y=Phenotypesub, idx=idx, alpha=Alpha[j], family="gaussian", cov=cov)
-      vector.lambda <- c( vector.lambda, fitsub$lambda )
-    }
-  }
-  
-  lambda.min <- min(vector.lambda)
-  lambda.max <- max(vector.lambda)
-  
-  seq.lambda <- seq(lambda.min, lambda.max, length.out=nlambda);
-  out <- array(0, c(ncol(SNP), length(seq.lambda), length(Alpha)) );
-  for( i in 1:K ){
-    for( j in 1:length(Alpha) ){
-      wsub <- sample(n, nsub);
-      SNPsub <- SNP[wsub,];
-      Phenotypesub <- Phenotype[wsub, ];
-      mglmnet.fit <- mglmnet(x=SNPsub, y=Phenotypesub, idx=idx, family="gaussian", alpha=Alpha[j], lambda=seq.lambda, cov=cov)
-      out[,,j] <- out[,,j] + as.numeric( mglmnet.fit$beta!=0 ) ;
-    }
-  }
-  
-  return(out);
-  
-}
-####################################################
-
-
-####################################################
 tpr.top <- function(sp, top, true){
     sp.sort <- sort( sp, decreasing=TRUE )
     thr <- sp.sort[top]
@@ -169,20 +126,14 @@ tpr.top <- function(sp, top, true){
 ####################################################
 
 ####################################################
-png.GenSNP <- function(n, p, rho, threads=threads, display_progress=FALSE ){
-  
-#  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, # varcov=ARCOV_C(p=(p/20), rho=rho, threads=1,  # display_progress=display_progress) ) ) )
-
-#  Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, # varcov=ARCOV_C(p=(p/20), rho=rho, threads=1, # display_progress=display_progress) ) ) )
+png.snp <- function(n, p, rho){
 
   X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_R(p=(p/20), rho=rho, threads=1) ) ) )
-
   Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_R(p=(p/20), rho=rho, threads=1) ) ) )
   
   MAF <- truncnorm::rtruncnorm(p, a=-0.65, b=0.65, mean=0, sd=5)^2
   
-  for(j in seq_len(p)){
-    
+  for(j in seq_len(p)){    
     perct_X <- rank( (X[,j]) )/length(X[,j])
     perct_Y <- rank( (Y[,j]) )/length(Y[,j])
     
@@ -190,7 +141,6 @@ png.GenSNP <- function(n, p, rho, threads=threads, display_progress=FALSE ){
     X[perct_X >  MAF[j], j] <- 0
     Y[perct_Y <= MAF[j], j] <- 1
     Y[perct_Y >  MAF[j], j] <- 0
-    
   }
   
   Data <- rbind( X + Y )
@@ -322,14 +272,12 @@ set.seed(2018*i)
 }
 ####################################################
 
-
-
 ####################################################
-GenSimulation.png <- function(n, p, M=25, snp.rho=0.6, ptrue=c(0.001, 0.005, 0.01), Beta=1, Beta.pdec=0.1, pcross=0.2,
-                              y.pNeg=0.2, Omega=0, rho=0.3){
+
+png.msnp <- function(n, p, M=25, snp.rho=0.6, ptrue=0.001, Beta=1, Beta.pdec=0.1, pcross=0.2, y.pNeg=0.2, Omega=0, rho=0.3){
   
   # snp <- do.call( "cbind", lapply(MAF, function(x) rbinom(n, 2, x) ) )
-  GenSNP <- png.GenSNP(n=n, p=p, rho=snp.rho)
+  GenSNP <- png.snp(n=n, p=p, rho=snp.rho)
   snp <- GenSNP$snp
   MAF <- GenSNP$MAF
   dimnames(snp) <- list(paste0("N",1:n), paste0("snp", 1:p))
@@ -361,7 +309,7 @@ GenSimulation.png <- function(n, p, M=25, snp.rho=0.6, ptrue=c(0.001, 0.005, 0.0
   ##  beta[201:210, 1:2]
   ##  hist( MAF[as.numeric(wbeta)] )
   
-  e.varcov <- GenVarcov(M, PropOfNeg = y.pNeg, Omega=Omega, rho=rho)
+  e.varcov <- png.varcov(M, PropOfNeg = y.pNeg, Omega=Omega, rho=rho)
   e.varcov[upper.tri(e.varcov)] %>% sign %>% table
   y <- snp %*% beta + mnormt::rmnorm(n,varcov=e.varcov)
 #  corrplot::corrplot(cor(y), tl.pos = "n")
@@ -387,8 +335,8 @@ mglmnet <- function(x=x, y=y, idx=NULL, cov=c("none", "remainder", "pc"), ...){
       out$dim[1] <- ncol(x)
       out$beta <- out$beta[-c(1:NCOL(Remainder)),]
       
-      
       return( out )
+
     } else if(cov == "pc"){
       PC <- prcomp(Remainder, scale.=TRUE)
       PCcov <- PC$x[,which( summary( PC )$sdev > 1), drop=FALSE]
@@ -399,29 +347,6 @@ mglmnet <- function(x=x, y=y, idx=NULL, cov=c("none", "remainder", "pc"), ...){
       return( out )
     }
   }
-}
-####################################################
-
-####################################################
-Method.lm <- function(SNP, Phenotype){
-pvalue.lm <- sapply( 1:ncol(SNP), function(j) {
-  fit_coef <- summary( lm( Phenotype ~ SNP[,j] ) )$coef
-  ifelse( nrow(fit_coef)==2, fit_coef[2,4], 9999 )
-} )
-return(-log10(pvalue.lm))
-}
-####################################################
-
-####################################################
-mcc <- function(true, pred, p){
-  data.frame(
-    Actual = ifelse((1:p)%in% true, "TRUE", "FALSE"),
-    Condition = ifelse((1:p)%in% pred, "+", "-") ) %>% table -> TABLE
-  TP <- TABLE[2,2]
-  FP <- TABLE[1,2]
-  FN <- TABLE[2,1]
-  TN <- TABLE[1,1]
-  return( (TP*TN-FP*FN)/(sqrt(TP+FP)*sqrt(TP+FN)*sqrt(TN+FP)*sqrt(TN+FN)) );
 }
 ####################################################
 
@@ -455,9 +380,32 @@ glmnet_ycov <- function( SNP, Phenotype, idxY, Alpha, method ){
 }
 ####################################################
 
-####################################################
-ARCOV_R <- function(p, rho, threads=1) outer(1:p, 1:p, function(x,y) rho^abs(x-y) )
 
+####################################################
+# Method.lm <- function(SNP, Phenotype){
+#   pvalue.lm <- sapply( 1:ncol(SNP), function(j) {
+#   fit_coef <- summary( lm( Phenotype ~ SNP[,j] ) )$coef
+#   ifelse( nrow(fit_coef)==2, fit_coef[2,4], 9999 )
+# } )
+# return(-log10(pvalue.lm))
+# }
+####################################################
+
+
+####################################################
+mcc <- function(true, pred, p){
+  data.frame(
+    Actual = ifelse((1:p)%in% true, "TRUE", "FALSE"),
+    Condition = ifelse((1:p)%in% pred, "+", "-") ) %>% table -> TABLE
+  TP <- TABLE[2,2]
+  FP <- TABLE[1,2]
+  FN <- TABLE[2,1]
+  TN <- TABLE[1,1]
+  return( (TP*TN-FP*FN)/(sqrt(TP+FP)*sqrt(TP+FN)*sqrt(TN+FP)*sqrt(TN+FN)) );
+}
+####################################################
+
+####################################################
 minmax <- function(x, lag){ 
   out <- ( x-min(x) )/(max(x)-min(x) )
   out 
@@ -470,6 +418,9 @@ SampleSign <- function(Matrix, PropOfNeg=PropOfNeg){
   Matrix[ upper.tri(Matrix) ] <- t(Matrix)[ upper.tri(Matrix) ]
   Matrix
 }
+####################################################
+
+####################################################
 digits <- function(x, which=1e1){
   as.numeric( unlist(strsplit(as.character(x),""))[nchar(x)+1-log10(10*which)] )
 }
@@ -483,8 +434,15 @@ Varcov_rho <- function(p, rho){
 }
 ####################################################
 
+
 ####################################################
-GenVarcov <- function(m, Omega = 0, PropOfNeg = 0.25, rho=0){
+png.varcov <- function(m, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
+
+  if( type == "arcov" ){
+      out <- outer(1:m, 1:m, function(x,y) rho^abs(x-y) ) 
+      invisible(out)
+  }
+
   if( PropOfNeg<0 | PropOfNeg>0.5 ) stop("PropOfNeg must be in [0,0.5].");
   
   if( rho == 0 ){
