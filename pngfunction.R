@@ -156,7 +156,9 @@ tpr.top <- function(sp, top, true){
 ####################################################
 png.GenSNP <- function(n, p, rho, threads=threads, display_progress=FALSE ){
   
-  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_C(p=(p/20), rho=rho, threads=1, display_progress=display_progress) ) ) )
+  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, #varcov=ARCOV_C(p=(p/20), rho=rho, threads=1, 
+display_progress=display_progress) ) ) )
+varcov=ARCOV_R(p=(p/20), rho=rho)
   Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_C(p=(p/20), rho=rho, threads=1, display_progress=display_progress) ) ) )
   
   MAF <- truncnorm::rtruncnorm(p, a=-0.65, b=0.65, mean=0, sd=5)^2
@@ -435,6 +437,7 @@ glmnet_ycov <- function( SNP, Phenotype, idxY, Alpha, method ){
 
 ####################################################
 ARCOV_R <- function(p, rho, threads=1) outer(1:p, 1:p, function(x,y) rho^abs(x-y) )
+
 minmax <- function(x, lag){ 
   out <- ( x-min(x) )/(max(x)-min(x) )
   out 
