@@ -4,24 +4,25 @@ library(dplyr)
 
 
 ####################################################
-ArrayToLong <- function(df){
-
-dm <- dim(df)
-expd <- expand.grid( lapply(dm, function(x) 1:x ) )
-
-out <- NULL
-for( i in 1:nrow(expd) ){
-	out <- rbind( out, df[ as.matrix( expd[i,], nrow=1 ) ] )
-}
-return( data.frame( expd, value=out ) )
-}
+# Replace this by plyr::adplyr( array, c(1,2,3) )
+# ArrayToLong <- function(df){
+# 
+# dm <- dim(df)
+# expd <- expand.grid( lapply(dm, function(x) 1:x ) )
+# 
+# out <- NULL
+# for( i in 1:nrow(expd) ){
+# 	out <- rbind( out, df[ as.matrix( expd[i,], nrow=1 ) ] )
+# }
+# return( data.frame( expd, value=out ) )
+# }
 ####################################################
 
 ####################################################
 btob <- function(x, name) paste0( deparse(substitute(name)),"=",x[1],"to",x[length(x)] )
 ####################################################
 
-#binom.glmnet.sp, gaussian.glmnet.sp °á°ú ÀÏÄ¡ÇÔ.
+#binom.glmnet.sp, gaussian.glmnet.sp Â°Ã¡Â°Ãº Ã€ÃÃ„Â¡Ã‡Ã”.
 ####################################################
 sp.glmnet <- function(x, y, psub=0.5, K=100, seq.alpha=NULL, n.lambda=NULL, family="gaussian", type.mgaussian=NULL, ...){
   if( NROW(y) != nrow(x) ) stop("x and y should be equal length of row")
@@ -151,7 +152,7 @@ png.snp <- function(n, p, rho){
 
 
 
-# ÀÚÁØ
+# Ã€ÃšÃÃ˜
 ####################################################
 th <- function(q, alpha, p) q^2/(2*alpha*p)+1/2
 ####################################################
