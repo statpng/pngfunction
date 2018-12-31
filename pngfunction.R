@@ -442,7 +442,7 @@ png.varcov <- function(m, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
   if( type == "arcov" ){
       out <- outer(1:m, 1:m, function(x,y) rho^abs(x-y) ) 
       invisible(out)
-  }
+  } else {
 
   if( PropOfNeg<0 | PropOfNeg>0.5 ) stop("PropOfNeg must be in [0,0.5].");
   
@@ -464,6 +464,8 @@ png.varcov <- function(m, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
   # e.varcov2 %>% .[upper.tri(.)] %>% hist(main="Error-term correlation", xlab=expression(rho,"e"))
   
   invisible(e.varcov2)
+	  
+  }
 }
 ####################################################
 
