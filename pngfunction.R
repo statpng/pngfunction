@@ -445,7 +445,7 @@ png.varcov <- function(p, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
 	
   if( type == "arcov" ){
       out <- outer(1:p, 1:p, function(x,y) rho^abs(x-y) ) 
-      invisible(out)
+      return(out)
   } 
 		   
   if( type == "random_sign" ){
@@ -461,19 +461,16 @@ png.varcov <- function(p, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
   
   x <- (e.varcov %*% e.varcov) + diag(Omega, p)
   e.varcov2 <- (x/sqrt(diag(x)%*%t( diag(x) )))
-  
+  return(e.varcov2)
   }
 	  
   if ( type == "all.equal" ) {
     if( rho == 0 ) stop("rho have to be equal or greater than 0")
     e.varcov2 <- varcov_rho(p=p, rho=rho)
+	  return(e.varcov2)
   }
   
   # e.varcov2 %>% .[upper.tri(.)] %>% hist(main="Error-term correlation", xlab=expression(rho,"e"))
-  
-  invisible(e.varcov2)
-	  
- 
 }
 ####################################################
 
