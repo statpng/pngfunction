@@ -428,7 +428,7 @@ digits <- function(x, which=1e1){
 ####################################################
 
 ####################################################
-Varcov_rho <- function(p, rho){
+varcov_rho <- function(p, rho){
   out <- matrix(rho, p, p)
   diag(out) <- 1
   return(out)
@@ -437,28 +437,28 @@ Varcov_rho <- function(p, rho){
 
 
 ####################################################
-png.varcov <- function(m, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
+png.varcov <- function(p, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
 
   if( type == "arcov" ){
-      out <- outer(1:m, 1:m, function(x,y) rho^abs(x-y) ) 
+      out <- outer(1:p, 1:p, function(x,y) rho^abs(x-y) ) 
       invisible(out)
   } else {
 
   if( PropOfNeg<0 | PropOfNeg>0.5 ) stop("PropOfNeg must be in [0,0.5].");
   
   if( rho == 0 ){
-  e.rho <- replicate( m*(m-1)/2, runif(1,0,1) )
-  e.varcov <- matrix(1, m, m)
+  e.rho <- replicate( p*(p-1)/2, runif(1,0,1) )
+  e.varcov <- matrix(1, p, p)
   e.varcov[upper.tri(e.varcov)] <- e.rho
   e.varcov[lower.tri(e.varcov)] <- t(e.varcov)[lower.tri(e.varcov)]
   e.varcov <- SampleSign(e.varcov, PropOfNeg = PropOfNeg)
   isSymmetric(e.varcov)
   
-  x <- (e.varcov %*% e.varcov) + diag(Omega, m)
+  x <- (e.varcov %*% e.varcov) + diag(Omega, p)
   e.varcov2 <- (x/sqrt(diag(x)%*%t( diag(x) )))
   
   } else if ( rho>0 ) {
-    e.varcov2 <- Varcov_rho(p=m, rho=rho)
+    e.varcov2 <- varcov_rho(p=p, rho=rho)
   }
   
   # e.varcov2 %>% .[upper.tri(.)] %>% hist(main="Error-term correlation", xlab=expression(rho,"e"))
