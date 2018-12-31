@@ -129,8 +129,8 @@ tpr.top <- function(sp, top, true){
 ####################################################
 png.snp <- function(n, p, rho){
 
-  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_R(p=(p/20), rho=rho, threads=1) ) ) )
-  Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=ARCOV_R(p=(p/20), rho=rho, threads=1) ) ) )
+  X <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=png.varcov(p=(p/20), rho=rho, type="arcov") ) ) )
+  Y <- do.call("cbind", lapply( 1:20, function(x) mnormt::rmnorm( n, varcov=png.varcov(p=(p/20), rho=rho, type="arcov") ) ) )
   
   MAF <- truncnorm::rtruncnorm(p, a=-0.65, b=0.65, mean=0, sd=5)^2
   
