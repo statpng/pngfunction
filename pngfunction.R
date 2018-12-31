@@ -439,14 +439,19 @@ varcov_rho <- function(p, rho){
 ####################################################
 png.varcov <- function(p, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
 
+  if( ! type %in% c("arcov", "random_sign", "all.equal") ) stop("type should be one among arcov, random_sign, and all.equal")
+		
+  if( is.null(type) ) stop("'type' should be entered")
+	
   if( type == "arcov" ){
       out <- outer(1:p, 1:p, function(x,y) rho^abs(x-y) ) 
       invisible(out)
-  } else {
+  } 
+		   
+  if( type == "random_sign" ){
 
   if( PropOfNeg<0 | PropOfNeg>0.5 ) stop("PropOfNeg must be in [0,0.5].");
   
-  if( rho == 0 ){
   e.rho <- replicate( p*(p-1)/2, runif(1,0,1) )
   e.varcov <- matrix(1, p, p)
   e.varcov[upper.tri(e.varcov)] <- e.rho
@@ -457,7 +462,10 @@ png.varcov <- function(p, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
   x <- (e.varcov %*% e.varcov) + diag(Omega, p)
   e.varcov2 <- (x/sqrt(diag(x)%*%t( diag(x) )))
   
-  } else if ( rho>0 ) {
+  }
+	  
+  if ( type == "all.equal" ) {
+    if( rho == 0 ) stop("rho have to be equal or greater than 0")
     e.varcov2 <- varcov_rho(p=p, rho=rho)
   }
   
@@ -465,7 +473,7 @@ png.varcov <- function(p, rho=0, type=NULL, Omega = 0, PropOfNeg = 0.25){
   
   invisible(e.varcov2)
 	  
-  }
+ 
 }
 ####################################################
 
