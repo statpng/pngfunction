@@ -24,7 +24,7 @@ btob <- function(x, name) paste0( deparse(substitute(name)),"=",x[1],"to",x[leng
 
 #binom.glmnet.sp, gaussian.glmnet.sp °á°ú ÀÏÄ¡ÇÔ.
 ####################################################
-sp.glmnet <- function(x, y, psub=0.5, K=100, seq.alpha=NULL, n.lambda=NULL, family="gaussian", type.mgaussian=NULL, ...){
+sp.glmnet <- function(x, y, psub=0.5, K=100, seq.alpha=NULL, n.lambda=NULL, family="gaussian", type.mgaussian=NULL, setseed, ...){
   if( NROW(y) != nrow(x) ) stop("x and y should be equal length of row")
   if( NCOL(y)>1 & (family!="mgaussian") ) stop("The family should be 'mgaussian'")
   if( NCOL(y)==1 & (family=="mgaussian") ) stop("The family should not be 'mgaussian'")
@@ -72,6 +72,7 @@ for( i in 1:10 ){
   out <- array(0, c(ncol(x), length(seq.lambda), length(seq.alpha)) );    
 for( j in 1:length(seq.alpha) ){
     for( i in 1:K ){
+      set.seed( setseed )
       if( family=="binomial" ){
           wsub <- c(sample(wc, nc), sample(wt, nt))
       } else {
