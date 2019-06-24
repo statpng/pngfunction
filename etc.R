@@ -1,5 +1,8 @@
 library(dplyr)
 library(ggplot2)
+library(tidyr)
+library(magrittr)
+library(R.utils)
 
 # save.figure  -----------------------------------------------------------------------
 
