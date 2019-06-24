@@ -114,3 +114,40 @@ for(i in 1:N){
 rownames(out)<-colnames(out)<-rownames(df)
 out
 }
+
+
+
+
+library(dplyr)
+
+
+Torgerson <- function(D, add=FALSE){
+  D <- as.matrix(D)
+    n <- nrow(D)
+    Ones <- matrix(1,n,n)
+    H <- diag(n) - Ones/n
+    B1 <- -1/2 * (H %*% D %*% H)
+    B2 <- -1/2 * (H %*% D^2 %*% H)
+    
+  if( add ){
+    tmp.mat <- rbind(  cbind(matrix(0,n,n), 2*B2),
+                       cbind(-diag(n), -4*B1)  )
+    ca <- max( Re( eigen(tmp.mat)$values ) )
+    PSD.mat <- -1/2 * ( D + ca*(1-diag(n)) )^2
+    PSD.cnt.mat <- H %*% PSD.mat %*% H
+    eigen.PSD <- eigen( PSD.cnt.mat, symmetric = TRUE )
+    positive.ev.bool <- eigen.PSD$values > 0
+    
+    ev <- eigen.PSD$values[positive.ev.bool]
+    evec <- eigen.PSD$vectors[ , positive.ev.bool]
+    out <- evec %*% diag( sqrt(ev) )
+    dimnames(out) <- list(rownames(D), NULL)
+  } else {
+    out <- B2
+  }
+  return(out)
+}
+
+# Torgerson(dist(skull[1:30,-1]), add=TRUE)[,1:10] %>% head
+# cmdscale(dist(skull[1:30,-1]), k=10,add=TRUE)$points[,1:10] %>% head
+
