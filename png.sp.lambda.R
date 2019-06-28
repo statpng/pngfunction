@@ -148,7 +148,7 @@ png.sp.lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, 
 
 
 
-png.get_lambda.sgl <- function(x, y, index=NULL, type, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
+png.get.lambda.sgl <- function(x, y, index=NULL, type, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
         # x=Data$snp
         # y=Data$y
         # type="linear"
