@@ -1,4 +1,4 @@
-png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, setseed, psub=0.5, ...){
+png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, setseed, psub=0.5, out="sp", ...){
     library(mnormt)
     library(glmnet)
     library(dplyr)
@@ -36,6 +36,7 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
     n.alpha <- length(seq.alpha)
     n.lambda <- unique( sapply(seq.lambda, length) )
     
+    if( out == "beta" ){
     beta.array <- array(NA,
                         dim = c(p, n.alpha, n.lambda, ncol(y), K), 
                         dimnames = list( paste0("", 1:p),  # paste0("v", 1:p), 
@@ -43,8 +44,18 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                          paste0("", seq_len(n.lambda)), # paste0("Lambda=", seq_len(n.lambda)),
                                          paste0("", seq_len(ncol(y))), # paste0("Phenotype=", seq_len(ncol(y))),
                                          paste0("", seq_len(K)) ) ) # paste0("Rep=", seq_len(K)) ) )
-    # names(attributes(beta.array)$dimnames) <- c("Variable", "Alpha", "Lambda", "Phenotype", "Replications")
-    beta.array <- beta.array %>% slam::as.simple_sparse_array()
+    names(attributes(beta.array)$dimnames) <- c("Variable", "Alpha", "Lambda", "Phenotype", "Replications")
+    } else if (out == "sp"){
+        beta.array <- array(NA,
+                            dim = c(p, n.alpha, n.lambda, ncol(y)), 
+                            dimnames = list( paste0("", 1:p),  # paste0("v", 1:p), 
+                                             paste0("",seq.alpha),   # paste0("Alpha=",seq.alpha),  
+                                             paste0("", seq_len(n.lambda)), # paste0("Lambda=", seq_len(n.lambda)),
+                                             paste0("", seq_len(ncol(y))), # paste0("Phenotype=", seq_len(ncol(y))),
+                                             paste0("", seq_len(1)) ) ) # paste0("Rep=", seq_len(K)) ) )
+        names(attributes(beta.array)$dimnames) <- c("Variable", "Alpha", "Lambda", "Phenotype", "Replications")
+    }
+    
     
     
     
@@ -70,11 +81,10 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
             
             for( colcol in 1:ncol(y) ){
                 
-                tmp.array <- array(NA, dim = c(p, n.lambda, 1))
                 if( family=="mgaussian" ){
-                    tmp.array[,,1] <- as.numeric( mgaussian.fit[[colcol]] != 0 )
+                    tmp.selected <- as.numeric( mgaussian.fit[[colcol]] != 0 )
                 } else if( family=="multinomial" ){
-                    tmp.array[,,1] <- 
+                    tmp.selected <- 
                         apply( sapply( glmnet(x=xsub, 
                                               y=ysub[,colcol,drop=F], 
                                               alpha=seq.alpha[aa], 
@@ -83,14 +93,19 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                               type.multinomial="grouped", ...)$beta, 
                                        function(xx) as.numeric(xx != 0) ), 1, sum )
                 } else {
-                    tmp.array[,,1] <- as.numeric( glmnet(x=xsub, 
+                    tmp.selected <- as.numeric( glmnet(x=xsub, 
                                                          y=ysub[,colcol,drop=F], 
                                                          alpha=seq.alpha[aa], 
                                                          lambda=seq.lambda[[colcol]], 
                                                          family=family, ... )$beta != 0 )
                 }
                 
-                beta.array[,aa,,colcol,kk] <- tmp.array[,,1]
+                if( out == "beta" ){
+                    beta.array[,aa,,colcol,kk] <- tmp.selected
+                } else if (out == "sp"){
+                    beta.array[,aa,,colcol,1] <- beta.array[,aa,,colcol,1] + tmp.selected
+                }
+                
             }
             
         }
