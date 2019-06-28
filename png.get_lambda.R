@@ -63,7 +63,7 @@ png.scale <- function(mat){
 }
 
 
-png.lambda <- function(x, y, seq.alpha, family){
+png.lambda <- function(x, y, seq.alpha, family, K=10){
         x.std <- png.scale(x)
         y.std <- as.matrix(y) # png.scale(y)
         if(family=="multinomial") y.std <- model.matrix(~-1+as.factor(y.std))
@@ -72,7 +72,6 @@ png.lambda <- function(x, y, seq.alpha, family){
         n <- nrow(y.std)
         p <- ncol(x)
         lambda.min.ratio <- ifelse( n < p, 0.01, 0.0001 )
-        K <- 100
         
         out <- as.list(1:length(seq.alpha))
         names(out) <- seq.alpha
