@@ -2,54 +2,54 @@ library(mnormt)
 library(glmnet)
 library(dplyr)
 
-# png.get_lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
-#         # x=Data$snp
-#         # y=Data$y
-#         # family="mixed"
-#         # psub=0.5
-#         # seq.alpha=seqalpha
-#         # n.lambda=nlambda
-#         # setseed=1129
-#         
-#         if( NROW(y) != nrow(x) ) stop("x and y should be equal length of row")
-#         
-#         if(is.null(seq.alpha)) seq.alpha <- 1:9*0.1
-#         if(is.null(n.lambda)) n.lambda <- 10
-#         
-#         x <- as.matrix(x)
-#         y <- as.matrix(y)
-#         
-#         n <- nrow(x);
-#         p <- ncol(x);
-#         nsub <- n*psub;
-#         
-#         if( family == "mgaussian" ){
-#                 y.column.set <- list(seq_len(ncol(y)))
-#         } else {
-#                 y.column.set <- seq_len(ncol(y))
-#         }
-#         
-#         seq.lambda <- as.list(1:length(y.column.set))
-#         for( colcol in 1:length(y.column.set) ){
-#                 h <- unlist( y.column.set[colcol] )
-#                 
-#                 lambda.vec <- NULL
-#                 for( i in 1:iter ){
-#                         for( j in 1:length(seq.alpha) ){
-#                                 wsub <- sample(n, nsub)
-#                                 xsub <- x[wsub,,drop=F]
-#                                 ysub <- y[wsub,,drop=F]
-#                                 fitsub <- glmnet(x=xsub, y=ysub[,h], alpha=seq.alpha[j], family=family, nlambda = n.lambda, ...)
-#                                 lambda.vec <- c( lambda.vec, fitsub$lambda )
-#                         }
-#                 }
-#                 seq.lambda[[colcol]] <- lambda.vec;
-#         }
-#         
-#         
-#         return(seq.lambda)
-#         
-# }
+png.get_lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
+        # x=Data$snp
+        # y=Data$y
+        # family="mixed"
+        # psub=0.5
+        # seq.alpha=seqalpha
+        # n.lambda=nlambda
+        # setseed=1129
+
+        if( NROW(y) != nrow(x) ) stop("x and y should be equal length of row")
+
+        if(is.null(seq.alpha)) seq.alpha <- 1:9*0.1
+        if(is.null(n.lambda)) n.lambda <- 10
+
+        x <- as.matrix(x)
+        y <- as.matrix(y)
+
+        n <- nrow(x);
+        p <- ncol(x);
+        nsub <- n*psub;
+
+        if( family == "mgaussian" ){
+                y.column.set <- list(seq_len(ncol(y)))
+        } else {
+                y.column.set <- seq_len(ncol(y))
+        }
+
+        seq.lambda <- as.list(1:length(y.column.set))
+        for( colcol in 1:length(y.column.set) ){
+                h <- unlist( y.column.set[colcol] )
+
+                lambda.vec <- NULL
+                for( i in 1:iter ){
+                        for( j in 1:length(seq.alpha) ){
+                                wsub <- sample(n, nsub)
+                                xsub <- x[wsub,,drop=F]
+                                ysub <- y[wsub,,drop=F]
+                                fitsub <- glmnet(x=xsub, y=ysub[,h], alpha=seq.alpha[j], family=family, nlambda = n.lambda, ...)
+                                lambda.vec <- c( lambda.vec, fitsub$lambda )
+                        }
+                }
+                seq.lambda[[colcol]] <- lambda.vec;
+        }
+
+
+        return(seq.lambda)
+
+}
 
 
 png.scale <- function(mat){
