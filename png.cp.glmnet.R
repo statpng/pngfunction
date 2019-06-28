@@ -1,4 +1,4 @@
-function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, setseed, psub=0.5, ...){
+png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, setseed, psub=0.5, ...){
     library(mnormt)
     library(glmnet)
     library(dplyr)
