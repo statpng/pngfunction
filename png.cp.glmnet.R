@@ -92,7 +92,7 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                               lambda=seq.lambda[[colcol]], 
                                               family=family,
                                               type.multinomial="grouped", ...)$beta, 
-                                       function(xx) as.numeric(xx != 0) ), 1, sum )
+                                       function(xx) as.numeric(xx != 0) ), 1, function(z) as.numeric(sum(z)!=0) )
                 } else {
                     tmp.selected <- as.numeric( glmnet(x=xsub, 
                                                        y=ysub[,colcol,drop=F], 
