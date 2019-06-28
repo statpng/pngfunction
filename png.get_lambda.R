@@ -77,7 +77,7 @@ png.lambda <- function(x, y, seq.alpha, family){
         out <- as.list(1:length(seq.alpha))
         names(out) <- seq.alpha
         for( h in 1:length(seq.alpha) ){
-                alpha = seq.alpha
+                alpha = seq.alpha[h]
                 lambda.max <- max( apply( crossprod(y.std, x.std), 2, 
                                           function(z) sqrt(sum(z^2))/(alpha*n) )) 
                 lambda.min <- lambda.max*lambda.min.ratio
