@@ -5,13 +5,14 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
     
     # x = xx
     # y = yy
-    # family = "multinomial"
+    # family = "gaussian"
     # type.multinomial = "grouped"
     # seq.alpha = 1:9 * 0.1
     # seq.lambda = res_lambda[index]
     # K = 100
     # setseed = (2019 - 06 - 28)
     # psub = 0.5
+    # out = "sp"
     
     # x=Data$snp
     # y=Data$y
@@ -58,7 +59,7 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
     
     
     
-    
+    beta.array <- slam::as.simple_sparse_array( beta.array )
     
     for( kk in 1:K ){
         print(kk)
@@ -76,7 +77,7 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                                      alpha=seq.alpha[aa], 
                                                      lambda=unlist(seq.lambda[1]), 
                                                      family=family, 
-                                                     standardize.response=TRUE, ... )$beta )
+                                                     standardize.response=TRUE, ...)$beta )
             }
             
             for( colcol in 1:ncol(y) ){
@@ -97,13 +98,13 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                                        y=ysub[,colcol,drop=F], 
                                                        alpha=seq.alpha[aa], 
                                                        lambda=seq.lambda[[colcol]], 
-                                                       family=family, ... )$beta != 0 )
+                                                       family=family, ...)$beta != 0 )
                 }
                 
                 if( out == "beta" ){
                     beta.array[,aa,,colcol,kk] <- tmp.selected
                 } else if (out == "sp"){
-                    beta.array[,aa,,colcol,1] <- beta.array[,aa,,colcol,1] + tmp.selected
+                    beta.array[,aa,,colcol,1] <- as.array(beta.array[,aa,,colcol,1]) + tmp.selected
                 }
                 
             }
@@ -117,24 +118,6 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
     return(beta.array);
     
 }
-
-
-
-
-
-# gaussian.union <- apply( gaussian.beta.array, c(1,2), function(nonzero) ifelse(sum(nonzero) > 0, 1, 0) )
-# mgaussian.union <- apply( mgaussian.beta.array, c(1,2), function(nonzero) ifelse(sum(nonzero)> 0, 1, 0) )
-png.get.sp <- function(array){
-  Margin.rep <- which( !names(dimnames(array)) %in% c("Replications") )
-  count.array <- apply( array, Margin.rep, function(x) mean(abs(x)>0) )
-  Margin.tuning <- which( !names(dimnames(count.array)) %in% c("Alpha", "Lambda") )
-  as.matrix(apply( count.array, Margin.tuning, max ))
-}
-
-
-
-
-
 
 
 
