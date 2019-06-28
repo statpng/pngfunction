@@ -62,26 +62,85 @@ png.scale <- function(mat){
         out
 }
 
-png.get_lambda <- function(x, y, seq.alpha, family){
+
+png.lambda <- function(x, y, seq.alpha, family){
         x.std <- png.scale(x)
         y.std <- as.matrix(y) # png.scale(y)
         if(family=="multinomial") y.std <- model.matrix(~-1+as.factor(y.std))
         # In glmnet, you should set the type.multinomial to multinomial.
         
         n <- nrow(y.std)
+        p <- ncol(x)
+        lambda.min.ratio <- ifelse( n < p, 0.01, 0.0001 )
+        K <- 100
         
-        sapply(seq.alpha, 
-               function(alpha) max( apply( crossprod(y.std, x.std), 2, 
-                                           function(z) sqrt(sum(z^2))/(alpha*n) )) )
+        out <- as.list(1:length(seq.alpha))
+        names(out) <- seq.alpha
+        for( h in 1:length(seq.alpha) ){
+                alpha = seq.alpha
+                lambda.max <- max( apply( crossprod(y.std, x.std), 2, 
+                                          function(z) sqrt(sum(z^2))/(alpha*n) )) 
+                lambda.min <- lambda.max*lambda.min.ratio
+                out[[h]] <- rev( seq( lambda.min, lambda.max, length.out = K ) )
+        }
         
-        # png.get_lambda(x = iris[,1:2], y = iris$Species, family = "multinomial", seq.alpha = .1)
-        # glmnet(x = as.matrix(iris[,1:2]), y = iris$Species, family = "multinomial", type.multinomial = "grouped", alpha = .1)$lambda %>% max
+        out
+                
         
-        # png.get_lambda(x = iris[,1:2], y = iris$Petal.Width, family = "gaussian", seq.alpha = .1)
-        # glmnet(x = as.matrix(iris[,1:2]), y = iris$Petal.Width, family = "gaussian", type.multinomial = "grouped", alpha = .1)$lambda %>% max
+        # png.lambda(x = iris[,1:2], y = iris$Species, family = "multinomial", seq.alpha = .1)
+        # glmnet(x = as.matrix(iris[,1:2]), y = iris$Species, family = "multinomial", type.multinomial = "grouped", alpha = .1)$lambda
         
-        # png.get_lambda(x = iris[,1:2], y = iris[,3:4], family = "mgaussian", seq.alpha = .1)
-        # glmnet(x = as.matrix(iris[,1:2]), y = iris[,3:4], family = "mgaussian", type.multinomial = "grouped", alpha = .1)$lambda %>% max
+        # png.lambda(x = iris[,1:2], y = iris$Petal.Width, family = "gaussian", seq.alpha = .1)
+        # glmnet(x = as.matrix(iris[,1:2]), y = iris$Petal.Width, family = "gaussian", type.multinomial = "grouped", alpha = .1)$lambda
+        
+        # png.lambda(x = iris[,1:2], y = iris[,3:4], family = "mgaussian", seq.alpha = 1:9*0.1)
+        # glmnet(x = as.matrix(iris[,1:2]), y = iris[,3:4], family = "mgaussian", type.multinomial = "grouped", alpha = .1)$lambda
+}
+
+
+png.sp.lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5){
+        # x=Data$snp
+        # y=Data$y
+        # family="mixed"
+        # psub=0.5
+        # seq.alpha=seqalpha
+        # n.lambda=nlambda
+        # setseed=1129
+
+        if( NROW(y) != nrow(x) ) stop("x and y should be equal length of row")
+
+        if(is.null(seq.alpha)) seq.alpha <- 1:9*0.1
+        if(is.null(n.lambda)) n.lambda <- 10
+
+        x <- as.matrix(x)
+        y <- as.matrix(y)
+
+        n <- nrow(x);
+        p <- ncol(x);
+        nsub <- n*psub;
+
+        y.column.set <- seq_len(ncol(y))
+
+        seq.lambda <- as.list(1:length(y.column.set))
+        for( colcol in 1:length(y.column.set) ){
+                h <- unlist( y.column.set[colcol] )
+
+                lambda.vec <- NULL
+                for( i in 1:iter ){
+                        
+                        wsub <- sample(n, nsub)
+                        xsub <- x[wsub,,drop=F]
+                        ysub <- y[wsub,,drop=F]
+                        lambda.list <- png.lambda(x=xsub, y=ysub[,h], seq.alpha=seq.alpha, family=family)
+                        lambda.vec <- c( lambda.vec, unlist(lambda.list) )
+                        
+                }
+                seq.lambda[[colcol]] <- lambda.vec;
+        }
+
+
+        return(seq.lambda)
+
 }
 
 
