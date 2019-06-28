@@ -166,3 +166,9 @@ png.math.na = function(x,y,operator,nonamed=FALSE){
 }
 
 
+		
+		
+png.order <- function(x){
+	library(gtools)
+	mixedorder(x)
+}
