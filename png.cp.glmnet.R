@@ -81,28 +81,12 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
 
 # gaussian.union <- apply( gaussian.beta.array, c(1,2), function(nonzero) ifelse(sum(nonzero) > 0, 1, 0) )
 # mgaussian.union <- apply( mgaussian.beta.array, c(1,2), function(nonzero) ifelse(sum(nonzero)> 0, 1, 0) )
-png.get_sp <- function(array){
+png.get.sp <- function(array){
   Margin.rep <- which( !names(dimnames(array)) %in% c("Replications") )
   count.array <- apply( array, Margin.rep, mean )
   Margin.tuning <- which( !names(dimnames(count.array)) %in% c("Alpha", "Lambda") )
   as.matrix(apply( count.array, Margin.tuning, max ))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
