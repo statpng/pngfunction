@@ -97,7 +97,7 @@ png.lambda <- function(x, y, seq.alpha, family, K=10){
 }
 
 
-png.sp.lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5){
+png.sp.lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
         # x=Data$snp
         # y=Data$y
         # family="mixed"
@@ -130,7 +130,7 @@ png.sp.lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, 
                         wsub <- sample(n, nsub)
                         xsub <- x[wsub,,drop=F]
                         ysub <- y[wsub,,drop=F]
-                        lambda.list <- png.lambda(x=xsub, y=ysub[,h], seq.alpha=seq.alpha, family=family)
+                        lambda.list <- png.lambda(x=xsub, y=ysub[,h], seq.alpha=seq.alpha, family=family, ...)
                         lambda.vec <- c( lambda.vec, unlist(lambda.list) )
                         
                 }
