@@ -52,7 +52,7 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                            alpha=seq.alpha[aa], 
                                            lambda=unlist(seq.lambda[1]), 
                                            family=family, 
-                                           standardize.response=TRUE )$beta )
+                                           standardize.response=TRUE, ... )$beta )
       }
       
       for( colcol in 1:ncol(y) ){
@@ -63,7 +63,7 @@ png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, 
                                                        y=ysub[,colcol,drop=F], 
                                                        alpha=seq.alpha[aa], 
                                                        lambda=seq.lambda[[colcol]], 
-                                                       family=family )$beta != 0 )
+                                                       family=family, ... )$beta != 0 )
         }
       }
       
@@ -191,7 +191,7 @@ png.cp.sgl <- function(x, y, type, seq.alpha=NULL, seq.lambda=NULL, K=100, setse
                         alpha=seq.alpha[aa], 
                         lambda=seq.lambda[[colcol]], 
                         type=type, 
-                        verbose=FALSE)$beta
+                        verbose=FALSE, ...)$beta
         for( lamlam in 1:ncol(beta.sgl) ){
           beta.array[,aa,lamlam,,kk] <- do.call("rbind", tapply( as.numeric(beta.sgl[,lamlam]!= 0), index, c ) )
         }
