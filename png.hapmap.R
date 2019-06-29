@@ -62,7 +62,7 @@ png.hapmap <- function(x){
   
   myGD.impute <- apply(myGD, 2, png.snpimpute)
   
-  out = list (myX, myGD, myGD.impute, myGM, myGT)
+  out = list (myX=myX, myGD=myGD, myGD.impute=myGD.impute, myGM=myGM, myGT=myGT)
   
   out
 }
