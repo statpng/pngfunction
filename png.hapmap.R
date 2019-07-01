@@ -44,7 +44,7 @@ png.hapmap <- function(x){
   myGD.impute <- apply(myGD, 2, png.impute.numeric)
 
   Taxa <- as.character( myX[1, -(1:11)] )
-  out = list (myX=myX, myGD=data.frame(Taxa=Taxa, myGD), myGD.impute=data.frame(Taxa=Taxa, myGD.impute), myGM=myGM)#, myGT=myGT)
+  out = list (myX=myX, myX.impute=myX.impute, myGD=data.frame(Taxa=Taxa, myGD), myGD.impute=data.frame(Taxa=Taxa, myGD.impute), myGM=myGM)#, myGT=myGT)
 
   out
 }
