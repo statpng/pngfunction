@@ -32,36 +32,16 @@ png.hapmap <- function(x){
   print( dim(x) ) # 49683 x 395
   print( dim(x.removed) ) # 46852 x 395
   
-  
   myX <- as.matrix( rbind( colnames(x.removed), x.removed ) )
   myGD <- apply(myX[-1,-(1:11)], 1,
                 function(one) GAPIT.Numericalization(one, bit=2, impute="None", Major.allele.zero=TRUE)) %>% 
     as.data.frame(stringsAsFactors = FALSE)
   myGM <- myX[-1,1:4]
   # myGT <- myX[,c(12:ncol(myX))]
-  
-  
-  png.snpimpute <- function(xx){
-    x.na <- xx[is.na(xx)]
-    x.value <- xx[!is.na(xx)]
-    
-    tb <- table( factor( x.value, levels=0:2 ) )
-    
-    y <- sum(x.value)
-    n <- 2*sum(tb)
-    # maf <- (tb[2]+2*tb[3])/(2*sum(tb))
-    # pi(p) ~ beta(2, 2)
-    # L(y|p) ~ B(p)
-    # pi(p|y) \prop pi(p) * L(y|p)
-    #         ~ Beta(y+2, n+2-y)
-    maf <- rbeta(n=length(x.na), shape1=y+2, n+2-y )/2
-    impute.value <- rbinom(n=length(x.na), size = 2, prob = maf)
-    xx[is.na(xx)] <- impute.value
-    xx
-  }
-  
-  myGD.impute <- apply(myGD, 2, png.snpimpute)
-  
+
+  myX.impute <- rbind( myX[1,], cbind( myX[-1,(1:11)], t( apply(t(myX[-1,-(1:11)]), 2, png.impute.snp) ) ) )
+  myGD.impute <- apply(myGD, 2, png.impute.numeric)
+                
   Taxa <- as.character( myX[1, -(1:11)] )
   out = list (myX=myX, myGD=data.frame(Taxa=Taxa, myGD), myGD.impute=data.frame(Taxa=Taxa, myGD.impute), myGM=myGM)#, myGT=myGT)
   
