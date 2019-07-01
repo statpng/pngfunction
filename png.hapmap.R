@@ -37,8 +37,8 @@ png.hapmap <- function(x){
   myGD <- apply(myX[-1,-(1:11)], 1,
                 function(one) GAPIT.Numericalization(one, bit=2, impute="None", Major.allele.zero=TRUE)) %>% 
     as.data.frame(stringsAsFactors = FALSE)
-  myGM <- myX[,1:4]
-  myGT <- myX[,c(12:ncol(myX))]
+  myGM <- myX[-1,1:4]
+  # myGT <- myX[,c(12:ncol(myX))]
   
   
   png.snpimpute <- function(xx){
@@ -62,7 +62,8 @@ png.hapmap <- function(x){
   
   myGD.impute <- apply(myGD, 2, png.snpimpute)
   
-  out = list (myX=myX, myGD=myGD, myGD.impute=myGD.impute, myGM=myGM, myGT=myGT)
+  Taxa <- as.character( myX[1, -(1:11)] )
+  out = list (myX=myX, myGD=data.frame(Taxa=Taxa, myGD), myGD.impute=(Taxa=Taxa, myGD.impute), myGM=myGM)#, myGT=myGT)
   
   out
 }
