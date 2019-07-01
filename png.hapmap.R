@@ -67,3 +67,4 @@ png.hapmap <- function(x){
   
   out
 }
+                
