@@ -258,7 +258,6 @@ if(ncp>0)  {
   
   if(standardization){
 	  SNP <- scale(SNP)
-	  Y <- scale(Y)
   }
 	
 	Data <- list(snp=SNP, y=Y, maf=MAF, beta=beta, true=true, true.cp=true.cp, true.sp=true.sp, args=ValuesOfArguments)
