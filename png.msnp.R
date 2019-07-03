@@ -3,26 +3,6 @@ library(glmnet)
 library(dplyr)
 
 
-png.snpimpute <- function(xx){
-  x.na <- xx[is.na(xx)]
-  x.value <- xx[!is.na(xx)]
-  
-  tb <- table( factor( x.value, levels=0:2 ) )
-  
-  y <- sum(x.value)
-  n <- 2*sum(tb)
-  # maf <- (tb[2]+2*tb[3])/(2*sum(tb))
-  # pi(p) ~ beta(2, 2)
-  # L(y|p) ~ B(p)
-  # pi(p|y) \prop pi(p) * L(y|p)
-  #         ~ Beta(y+2, n+2-y)
-  maf <- rbeta(n=length(x.na), shape1=y+2, n+2-y )/2
-  impute.value <- rbinom(n=length(x.na), size = 2, prob = maf)
-  xx[is.na(xx)] <- impute.value
-  xx
-}
-
-
 
 sparse.dim <- function(sparsematrix){
   rows <- sparsematrix@i + 1
