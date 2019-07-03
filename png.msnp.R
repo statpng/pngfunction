@@ -252,10 +252,14 @@ if(ncp>0)  {
 	cp.mu=cp.mu, 
 	ncp=ncp, 
 	nsp=nsp,
-	cov.type=cov.type
+	cov.type=cov.type,
+	standardization=standardization
 	)
   
-  if(standardization) SNP <- scale(SNP)
+  if(standardization){
+	  SNP <- scale(SNP)
+	  Y <- scale(Y)
+  }
 	
 	Data <- list(snp=SNP, y=Y, maf=MAF, beta=beta, true=true, true.cp=true.cp, true.sp=true.sp, args=ValuesOfArguments)
   return(Data);
