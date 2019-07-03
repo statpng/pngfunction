@@ -1,4 +1,4 @@
-png.get_sp <- function(array){
+png.get.sp <- function(array){
   Margin.rep <- which( !names(dimnames(array)) %in% c("Replications") )
   count.array <- apply( array, Margin.rep, mean )
   Margin.tuning <- which( !names(dimnames(count.array)) %in% c("Alpha", "Lambda") )
