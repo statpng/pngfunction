@@ -1,3 +1,11 @@
+png.get_sp <- function(array){
+  Margin.rep <- which( !names(dimnames(array)) %in% c("Replications") )
+  count.array <- apply( array, Margin.rep, mean )
+  Margin.tuning <- which( !names(dimnames(count.array)) %in% c("Alpha", "Lambda") )
+  as.matrix(apply( count.array, Margin.tuning, max ))
+}
+
+
 png.cp.glmnet <- function(x, y, family, seq.alpha=NULL, seq.lambda=NULL, K=100, setseed, psub=0.5, out="sp", ...){
     library(mnormt)
     library(glmnet)
