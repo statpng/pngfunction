@@ -2,7 +2,7 @@ library(mnormt)
 library(glmnet)
 library(dplyr)
 
-png.get_lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
+png.get.lambda <- function(x, y, family, iter=10, seq.alpha=NULL, n.lambda=NULL, psub=0.5, ...){
         # x=Data$snp
         # y=Data$y
         # family="mixed"
