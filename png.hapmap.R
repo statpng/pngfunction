@@ -1,4 +1,4 @@
-png.hapmap <- function(x){
+png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
   # Initial of function -----------------------------------------------------  
   # 1.Sorting -----------------------------------------------------------------
   ord.x <- gtools::mixedorder(colnames(x[,-(1:11)]))
@@ -6,8 +6,8 @@ png.hapmap <- function(x){
 
   x <- x[,c(1:11, ord.x+11)]
 
-  rm.missing <- which( x[,-(1:11)] %>% apply(1, function(x) mean(is.na(x) | x == "NN")) > 0.2 ) # 2804
-  rm.missing.sample <- which( x[,-(1:11)] %>% apply(2, function(x) mean(is.na(x) | x == "NN")) > 0.2 ) # 1
+  rm.missing <- which( x[,-(1:11)] %>% apply(1, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 2804
+  rm.missing.sample <- which( x[,-(1:11)] %>% apply(2, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 1
 
   set.heterozygote <- apply(expand.grid(c("T","C","A","G"), c("T","C","A","G")) %>% 
                               filter(Var1 != Var2), 1, paste0, collapse="")
@@ -16,7 +16,7 @@ png.hapmap <- function(x){
     x %>% replace( ., .=="NN", NA ) %>% unlist %>% { mean( . %in% set.heterozygote ) }
   }
 
-  rm.hetero <- which( x[,-(1:11)] %>% apply(1, function(x) png.heterozygousCalls(x)) > 0.2 ) # 37
+  rm.hetero <- which( x[,-(1:11)] %>% apply(1, function(x) png.heterozygousCalls(x)) > cutoff.hetero ) # 37
 
   print( x[,-(1:11)][ rm.hetero , ] %>% apply(1, table) )
 
