@@ -40,7 +40,9 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
   myGM <- myX[-1,1:4]
   # myGT <- myX[,c(12:ncol(myX))]
 
+  set.seed(120120)
   myX.impute <- rbind( myX[1,], cbind( myX[-1,(1:11)], t( apply(t(myX[-1,-(1:11)]), 2, png.impute.snp) ) ) )
+  set.seed(120120)
   myGD.impute <- apply(myGD, 2, png.impute.numeric)
 
   Taxa <- as.character( myX[1, -(1:11)] )
