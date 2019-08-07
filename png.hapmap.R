@@ -36,6 +36,7 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
   myX <- as.matrix( rbind( colnames(x.removed), x.removed ) )
   myGD <- apply(myX[-1,-(1:11)], 1,
                 function(one) GAPIT.Numericalization(one, bit=2, impute="None", Major.allele.zero=TRUE)) %>% 
+                # function(one) GAPIT.Numericalization(one, bit=2, impute="Major", Major.allele.zero=TRUE)) %>% 
     as.data.frame(stringsAsFactors = FALSE)
   myGM <- myX[-1,1:4]
   # myGT <- myX[,c(12:ncol(myX))]
