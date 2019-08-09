@@ -1,6 +1,8 @@
 png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
   # Initial of function -----------------------------------------------------  
   # 1.Sorting -----------------------------------------------------------------
+  
+  x <- as.matrix(x)
   ord.x <- gtools::mixedorder(colnames(x[,-(1:11)]))
 
 
