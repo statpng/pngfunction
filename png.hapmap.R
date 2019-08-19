@@ -1,4 +1,5 @@
-png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
+png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-6){
+  print( "If case-control status is available, limit the filtering of cutoff.HWE to control group as a violation in case group may be an indication of association." )
   # Initial of function -----------------------------------------------------  
   # 1.Sorting -----------------------------------------------------------------
   
@@ -7,6 +8,15 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
 
 
   x <- x[,c(1:11, ord.x+11)]
+    
+  pvalue.HWE <- sapply( 1:nrow(x), function(indx) {
+    input <- strsplit(as.character(unlist(x[indx,-(1:11)]) %>% 
+                                   {replace(., list = (.=="NN"), NA)} ),"")
+    sapply( input, paste0, collapse="/") %>% 
+      genetics::genotype() %>%
+      genetics::HWE.exact() %>% .$p.value
+    })
+  rm.HWE <- which( pvalue.HWE <= cutoff.HWE )
 
   rm.missing <- which( x[,-(1:11)] %>% apply(1, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 2804
   rm.missing.sample <- which( x[,-(1:11)] %>% apply(2, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 1
@@ -25,12 +35,15 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2){
   rm.dup.var <- which(duplicated(x)) # There are no duplicates in variants
   rm.dup.sample <- which(duplicated(t(x[,-(1:11)]))) # There are no duplicates in samples
 
-  rm.var <- c(rm.missing, rm.hetero, rm.missing.sample, rm.dup.var)
+  rm.var <- c(rm.missing, rm.hetero, rm.missing.sample, rm.dup.var, rm.HWE)
   rm.sample <- rm.dup.sample
 
   x.removed <- x
   if( length(rm.var)>0 ) x.removed <- x[ -unique( rm.var ), ]
   if( length(rm.sample)>0 ) x.removed <- x[, -(unique( rm.sample )+11) ]
+                                            
+  write.table( x[ -unique( rm.var ), ] )
+  write.table( x[, -(unique( rm.sample )+11) ] )
 
   print( dim(x) ) # 49683 x 395
   print( dim(x.removed) ) # 46852 x 395
