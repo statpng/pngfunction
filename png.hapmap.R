@@ -11,11 +11,16 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
     
   pvalue.HWE <- sapply( 1:nrow(x), function(indx) {
     input <- strsplit(as.character(unlist(x[indx,-(1:11)]) %>% 
-                                   {replace(., list = (.=="NN"), NA)} ),"")
-    sapply( input, paste0, collapse="/") %>% 
-      genetics::genotype() %>%
+    {replace(., list = (.=="NN"), NA)} ),"")
+    input.genotype <- sapply( input, paste0, collapse="/") %>% 
+      genetics::genotype()
+    if(length(table(input.genotype))>1){
+    input.genotype %>%
       genetics::HWE.exact() %>% .$p.value
-    })
+    } else {
+      1
+    }
+  })
   rm.HWE <- which( pvalue.HWE <= cutoff.HWE )
 
   rm.missing <- which( x[,-(1:11)] %>% apply(1, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 2804
