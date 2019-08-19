@@ -82,24 +82,25 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
                 
                 
                 
-png.remove.hapmap <- function(SNP, remove.id){
+png.remove.hapmap <- function(SNP, remove){
   if( !identical( names(SNP), c("myX", "myX.impute", "myGD", "myGD.impute", "myGM") ) ) warning("Names of input is different from 'myX', 'myX.impute', 'myGD', 'myGD.impute', 'myGM'")
   
   lists.filtered <- NULL
   for( i in 1:length(SNP) ){
     if( names(SNP)[i] %in% c("myX", "myX.impute") ){
-      tmp.filtered <- SNP[[i]][, c(1:11, 11+remove.id)]
+      tmp.filtered <- SNP[[i]][, c(1:11, 11+remove)]
       lists.filtered <- append(lists.filtered, list(tmp.filtered))
     }
     if( names(SNP)[i] %in% c("myGD", "myGD.impute") ){
-      tmp.filtered <- SNP[[i]][11+remove.id, ]
+      tmp.filtered <- SNP[[i]][11+remove, ]
       lists.filtered <- append(lists.filtered, list(tmp.filtered))
     }
   }
   
   lists.filtered <- append(lists.filtered, list(SNP$myGM))
+  names(lists.filtered) <- names(SNP)
   lists.filtered
-}                
+} 
                 
                 
                 
