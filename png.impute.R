@@ -11,7 +11,7 @@ png.impute.numeric <- function(xx){
   # L(y|p) ~ B(p)
   # pi(p|y) \prop pi(p) * L(y|p)
   #         ~ Beta(y+2, n+2-y)
-  maf <- rbeta(n=length(x.na), shape1=y+2, n+2-y )/2
+  maf <- rbeta(n=length(x.na), shape1=y+2, n+2-y )
   impute.value <- rbinom(n=length(x.na), size = 2, prob = maf)
   xx[is.na(xx)] <- impute.value
   xx
@@ -50,6 +50,6 @@ png.impute.snp <- function(xx){
   maf <- rbeta(n=length(x.na), shape1=y+2, n+2-y )
   # curve(dbeta(x, shape1=y+2, n+2-y ))
   impute.value <- rbinom(n=length(x.na), size = 2, prob = maf)
-  xx[is.na(xx)] <- names(tb)[ impute.value+1 ]
+  xx[is.na(xx)] <- names(tb.new)[ impute.value+1 ]
   xx
 }
