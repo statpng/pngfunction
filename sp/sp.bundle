@@ -1,0 +1,15 @@
+png.get_qhat <- function(sp.array){
+  ## sp.array : a p x n.alpha x n.lambda
+  p <- dim(sp.array)[1]
+  qhat <- sum(sp.array) / (dim(sp.array)[2]*dim(sp.array)[3])
+  list(qhat=qhat, p=p)
+}
+
+png.get_cutoff <- function(png.qhat, theta_vec){
+  ## png.qhat : an object from png.get_qhat
+  ## theta_vec : a numeric vector
+  qhat <- png.qhat$qhat
+  p <- png.qhat$p
+  
+  sapply( theta_vec, function(theta) min(1, qhat^2/(2*theta*p)+1/2 ) )
+}
