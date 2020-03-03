@@ -1,7 +1,11 @@
+pdf(file="ExampleOfPar.pdf", width=10, height=10)
 png.par <- par(mfrow = c(2,2),
                oma = c(5,4,0,0) + 0.1,
                mar = c(0,0,1,1) + 0.1)
-par(png.par)
+
 for( i in 1:4 ){
   plot(1:10, col=1:10, type="b", pch=18, lwd=2, cex=5)
 }
+
+par(png.par)
+dev.off()
