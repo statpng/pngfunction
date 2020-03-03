@@ -1,0 +1,27 @@
+png.venn <- function(set.list, ...){
+  # set.list :: a list of sets
+  
+  # library(venneuler, quietly = TRUE)
+  library(eulerr)
+  
+  venn.mat <- VennDiagram::get.venn.partitions(set.list) %>% 
+    select(1:length(set.list), count = ..count..) %>% 
+    {apply(., 1, function(x) replicate( x[length(x)], x[-length(x)] ) )} %>% 
+    do.call("cbind", .) %>% t
+  
+  out.venn <- venn(venn.mat, ...)
+  
+  # pdf(file="./Venndiagram.pdf", height = 5, width = 10)
+  gridExtra::grid.arrange(
+    grid::grobTree( out.venn %>% plot(labels = list(fontsize = 17), quantities = list(fontsize = 15)) ),
+    # grid::grobTree( out.venn %>% plot(labels = list(fontsize = 17), quantities = list(fontsize = 15)) ),
+    # textGrob(expression(bold("cluster1")),gp=gpar(fontfamily="serif",fontsize=20, fontface="bold",lineheight=1) ),
+    # textGrob(expression(bold("cluster2")),gp=gpar(fontfamily="serif",fontsize=20, fontface="bold",lineheight=1) ),
+    ncol=1, vp=grid::viewport(width=1, height=1)
+    # ncol=2, vp=grid::viewport(width=1, height=1), heights = c(4, 0.5),
+    # layout_matrix = rbind( c(1, 2), c(3, 4) )
+  )
+  # dev.off()
+  
+  out.venn
+}
