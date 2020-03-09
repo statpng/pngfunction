@@ -1,4 +1,4 @@
-png.venn <- function(set.list, ...){
+png.venndiagram <- function(set.list, ...){
   # set.list :: a list of sets
   
   # library(venneuler, quietly = TRUE)
