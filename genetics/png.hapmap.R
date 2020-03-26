@@ -57,7 +57,7 @@ png.impute.snp <- function(xx){
 }
                           
 
-png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-6){
+png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-6, write=FALSE){
   print( "If case-control status is available, limit the filtering of cutoff.HWE to control group as a violation in case group may be an indication of association." )
   # Initial of function -----------------------------------------------------  
   # 1.Sorting -----------------------------------------------------------------
@@ -105,14 +105,16 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
   x.removed <- x
   if( length(rm.var)>0 ) x.removed <- x[ -unique( rm.var ), ]
   if( length(rm.sample)>0 ) x.removed <- x[, -(unique( rm.sample )+11) ]
-  
-  write.table( x[ -unique( rm.var ), ] )
-  write.table( x[, -(unique( rm.sample )+11) ] )
+
+  if( write ){
+    write.table( x[ -unique( rm.var ), ] )
+    write.table( x[, -(unique( rm.sample )+11) ] )
+  }  
   
   print( dim(x) ) # 49683 x 395
   print( dim(x.removed) ) # 46852 x 395
   
-  myX <- as.matrix( rbind( colnames(x.removed), x.removed ) )
+  myX <- as.matrix( x.removed )
   myGD <- apply(myX[-1,-(1:11)], 1,
                 function(one) GAPIT.Numericalization(one, bit=2, impute="None", Major.allele.zero=TRUE)) %>% 
     # function(one) GAPIT.Numericalization(one, bit=2, impute="Major", Major.allele.zero=TRUE)) %>% 
@@ -134,6 +136,3 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
   
   out
 }
-
-
-
