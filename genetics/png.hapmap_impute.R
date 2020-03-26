@@ -1,3 +1,5 @@
+devtools::source_url("https://raw.githubusercontent.com/statpng/pngfunction/master/png.mat_order.R")
+
 png.hapmap_impute <- function(hapmap.missing.df){
   # You must read the genotype data with "header=FALSE"
   # dim(hapmap.missing.df) = (p+1) x (n+11)
