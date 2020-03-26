@@ -24,7 +24,7 @@ png.hapmap_impute <- function(hapmap.missing.df){
   snp.info <- hapmap.missing.df[-1,c(1:11)]
   
   NN.df <- t( hapmap.missing.df[-1,-c(1:11)] )
-  missing.df <- ifelse(NN.df == "NN", NA, NN.df)
+  missing.df <- ifelse(NN.df %in% c("NN", "00", "--", "//", "++", "XX"), NA, NN.df)
   
   gp.created <- create.gpData(geno=missing.df)
   gp.coded <- codeGeno(gp.created, 
