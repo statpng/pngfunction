@@ -1,20 +1,3 @@
-mat.order <- function(mat, row=TRUE, col=TRUE){
-  library(gtools)
-  if( row ){
-    row.order <- mixedorder(rownames(mat))
-  } else {
-    row.order <- TRUE
-  }
-  
-  if( col ){
-    col.order <- mixedorder(colnames(mat))
-  } else {
-    col.order <- TRUE
-  }
-  return( mat[row.order, col.order] )
-}
-
-
 png.hapmap_impute <- function(hapmap.missing.df){
   # You must read the genotype data with "header=FALSE"
   # dim(hapmap.missing.df) = (p+1) x (n+11)
@@ -35,7 +18,7 @@ png.hapmap_impute <- function(hapmap.missing.df){
                        verbose=TRUE)
   gp.coded$geno
   print( lapply( summary(gp.coded), head ) )
-  imputed.df <- mat.order( gp.coded$geno )
+  imputed.df <- png.mat_order( gp.coded$geno )
   
   removed.snp <- which( apply(missing.df, 2, function(x) all(is.na(x))) )
   
@@ -51,7 +34,7 @@ png.hapmap_impute <- function(hapmap.missing.df){
   #   imputed=imputed.df[ which( is.na(missing.df[,-removed.snp]) ) ]
   # )
   
-  gp.map <- mat.order( gp.coded$alleles, row=TRUE, col=FALSE )
+  gp.map <- png.mat_order( gp.coded$alleles, row=TRUE, col=FALSE )
   
   hapmap.df <- imputed.df
   for( h in 1:ncol(imputed.df) ){
