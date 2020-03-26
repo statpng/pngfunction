@@ -15,7 +15,7 @@ mat.order <- function(mat, row=TRUE, col=TRUE){
 }
 
 
-hapmap.impute <- function(hapmap.missing.df){
+png.hapmap_impute <- function(hapmap.missing.df){
   # You must read the genotype data with "header=FALSE"
   # dim(hapmap.missing.df) = (p+1) x (n+11)
   library(synbreed)
