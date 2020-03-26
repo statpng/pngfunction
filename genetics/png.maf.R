@@ -5,7 +5,7 @@ png.maf <- function(xx, sep=""){
   if(length(unique(xx))<=1) return(1e-22)
   
   
-  xx <- ifelse(xx=="NN", NA, xx)
+  xx <- ifelse(xx %in% c("NN", "00", "--", "//", "++", "XX"), NA, xx)
   x.na <- xx[is.na(xx)]
   x.value <- xx[!is.na(xx)]
   
