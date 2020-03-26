@@ -1,0 +1,20 @@
+png.hapmap_filter <- function(SNP, rows.to.be.filtered){
+  if( !identical( names(SNP), c("myX", "myX.impute", "myGD", "myGD.impute", "myGM") ) ) warning("Names of input is different from 'myX', 'myX.impute', 'myGD', 'myGD.impute', 'myGM'")
+  
+  lists.filtered <- NULL
+  for( i in 1:length(SNP) ){
+    if( names(SNP)[i] %in% c("myX", "myX.impute") ){
+      tmp.filtered <- SNP[[i]][, c(1:11, 11+rows.to.be.filtered)]
+      lists.filtered <- append(lists.filtered, list(tmp.filtered))
+    }
+    if( names(SNP)[i] %in% c("myGD", "myGD.impute") ){
+      tmp.filtered <- SNP[[i]][11+rows.to.be.filtered, ]
+      lists.filtered <- append(lists.filtered, list(tmp.filtered))
+    }
+  }
+  
+  lists.filtered <- append(lists.filtered, list(SNP$myGM))
+  names(lists.filtered) <- names(SNP)
+  lists.filtered
+} 
+                
