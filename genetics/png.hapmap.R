@@ -3,8 +3,7 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
   # Initial of function -----------------------------------------------------  
   # 1.Sorting -----------------------------------------------------------------
   
-  header <- x[1,]
-  x <- as.matrix(x[-1,])
+  x <- as.matrix(x)
   ord.x <- gtools::mixedorder(colnames(x[,-(1:11)]))
   
   
@@ -15,7 +14,7 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
                                      {replace(., list = (. %in% c("NN", "00", "--", "//", "++", "XX") ), NA)} ),"")
     input.genotype <- sapply( input, paste0, collapse="/") %>% 
       genetics::genotype()
-    if(length(table(input.genotype))>1){
+    if(length(table(input.genotype))>1 & length(levels(input.genotype))<6){
       input.genotype %>%
         genetics::HWE.exact() %>% .$p.value
     } else {
@@ -24,8 +23,8 @@ png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-
   })
   rm.HWE <- which( pvalue.HWE <= cutoff.HWE )
   
-  rm.missing <- which( x[,-(1:11)] %>% apply(1, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 2804
-  rm.missing.sample <- which( x[,-(1:11)] %>% apply(2, function(x) mean(is.na(x) | x == "NN")) > cutoff.missing ) # 1
+  rm.missing <- which( x[,-(1:11)] %>% apply(1, function(x) mean(is.na(x) | x %in% c("NN", "00", "--", "//", "++", "XX") )) > cutoff.missing ) # 2804
+  rm.missing.sample <- which( x[,-(1:11)] %>% apply(2, function(x) mean(is.na(x) | x %in% c("NN", "00", "--", "//", "++", "XX") )) > cutoff.missing ) # 1
   
   set.heterozygote <- apply(expand.grid(c("T","C","A","G"), c("T","C","A","G")) %>% 
                               filter(Var1 != Var2), 1, paste0, collapse="")
