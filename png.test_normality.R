@@ -1,5 +1,5 @@
 png.test_normality <- function(x, test=c("shapiro", "ks"), bestNormalize=FALSE){
-
+  library(dplyr)
   name.x <- deparse(substitute(x))
   test <- match.arg(test)
   
@@ -70,8 +70,8 @@ png.test_normality <- function(x, test=c("shapiro", "ks"), bestNormalize=FALSE){
   p
 }
 
-# hist_ordinary <- transformDensity(moonBook::acs$TG, test="shapiro", bestNormalize = FALSE)
-# hist_best <- transformDensity(moonBook::acs$TG, test="shapiro", bestNormalize = TRUE)
+# hist_ordinary <- png.test_normality(moonBook::acs$TG, test="shapiro", bestNormalize = FALSE)
+# hist_best <- png.test_normality(moonBook::acs$TG, test="shapiro", bestNormalize = TRUE)
 # 
 # hist_ordinary %>% ggsave(filename="test_ordinary.jpeg", width=10, height=5)
 # hist_best %>% ggsave(filename="test_best.jpeg", width=10, height=5)
