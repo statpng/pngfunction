@@ -10,7 +10,7 @@ png.hapmap_impute <- function(hapmap.missing.df){
   
   NN.df <- t( hapmap.missing.df[-1,-c(1:11)] )
   missing.df <- apply( NN.df , 2, function(x) ifelse(x %in% c("NN", "00", "--", "//", "++", "XX"), NA, x) )
-  dimnames(missing.df) <- dimnames(NN.df)
+  dimnames(missing.df) <- rev(dimnames(hapmap.missing.df[-1,-c(1:11)]))
   
   gp.created <- create.gpData(geno=missing.df)
   gp.coded <- codeGeno(gp.created, 
