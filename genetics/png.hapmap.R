@@ -57,7 +57,7 @@ png.impute.snp <- function(xx){
 }
                           
 
-png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=10e-6, write=FALSE){
+png.hapmap <- function(x, cutoff.hetero=0.2, cutoff.missing=0.2, cutoff.HWE=1e-6, write=FALSE){
   print( "If case-control status is available, limit the filtering of cutoff.HWE to control group as a violation in case group may be an indication of association." )
   # Initial of function -----------------------------------------------------  
   # 1.Sorting -----------------------------------------------------------------
