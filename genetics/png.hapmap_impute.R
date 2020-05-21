@@ -1,3 +1,4 @@
+if(FALSE){
 devtools::source_url("https://raw.githubusercontent.com/statpng/pngfunction/master/png.mat_order.R")
 
 png.hapmap_impute <- function(hapmap.missing.df){
@@ -62,4 +63,5 @@ png.hapmap_impute <- function(hapmap.missing.df){
   
   print(paste0("There are no missing values(", sum(is.na(out[-1,-c(1:11)])),")."))
   return(out)
+}
 }
