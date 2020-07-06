@@ -7,34 +7,41 @@ library(R.utils)
 # save.figure  -----------------------------------------------------------------------
 
 png.save.figure <- function(expr, file="./Figure/figure.jpeg", print=T, save=T, ...){
-
-	extension <- strsplit( file, "\\." )[[1]] %>% .[length(.)]
-	if(save){
-		switch(extension,
-			 png = {
-			   png(file, ...)
-			   eval(parse(text=expr))
-			   dev.off()
-			 },
-			 jpeg = {
-			   jpeg(file, ...)
-			   eval(parse(text=expr))
-			   dev.off()
-			 },
-			 pdf = {
-			   pdf(file, ...)
-			   eval(parse(text=expr))
-			   dev.off()
-			 },
-	 
-		 {stop("filetype not recognized")}
-		 )
-	 }
-		 
-       #print?
-	if (print) eval(parse(text=expr))
-	invisible(NULL)
-
+  
+  extension <- strsplit( file, "\\." )[[1]] %>% .[length(.)]
+  if(save){
+    switch(extension,
+           png = {
+             png(file, ...)
+             eval(parse(text=expr))
+             dev.off()
+           },
+           jpeg = {
+             jpeg(file, ...)
+             eval(parse(text=expr))
+             dev.off()
+           },
+           pdf = {
+             pdf(file, ...)
+             eval(parse(text=expr))
+             dev.off()
+           },
+           eps = {
+             setEPS()
+             postscript(file, ...)
+             # postscript("./Figure/Manhattan.eps", width=10, height=5)
+             eval(parse(text=expr))
+             dev.off()
+           }
+           
+           {stop("filetype not recognized")}
+    )
+  }
+  
+  #print?
+  if (print) eval(parse(text=expr))
+  invisible(NULL)
+  
 }	
 
 
