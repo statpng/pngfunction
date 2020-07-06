@@ -32,7 +32,7 @@ png.save.figure <- function(expr, file="./Figure/figure.jpeg", print=T, save=T, 
              # postscript("./Figure/Manhattan.eps", width=10, height=5)
              eval(parse(text=expr))
              dev.off()
-           }
+           },
            
            {stop("filetype not recognized")}
     )
