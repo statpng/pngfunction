@@ -1,3 +1,98 @@
+png.cmdscale <- function(dist, dim, eig=TRUE, ...){
+    dist <- as.matrix(dist)
+    
+    if( length(rownames(dist))>0 ){
+        Label <- rownames(dist)
+    } else {
+        Label <- seq_len(nrow(dist))
+    }
+    
+    cmdscale( dist, k = max(dim), eig=eig, ... ) %$% 
+        {
+            .$points %>% 
+                magrittr::set_colnames(paste0("Dim", seq_len(max(dim)) )) %>% 
+                data.frame(Label=Label, .) %>% 
+                as.data.frame %>% 
+                ggplot( aes_string(x=paste0("Dim", dim[1]), y=paste0("Dim", dim[2])) )+
+                xlab(paste0("Dim", dim[1], " (", round(.$eig[dim[1]]/sum(.$eig),3)*100 ,"%)"))+
+                ylab(paste0("Dim", dim[2], " (", round(.$eig[dim[2]]/sum(.$eig),3)*100 ,"%)"))+
+                geom_point(size=1, shape=3)+
+                geom_text(aes(label=Label), size=5,
+                          check_overlap = FALSE,
+                          # hjust = "center", vjust = "bottom",
+                          nudge_x = 0, nudge_y = 0.05)+
+                geom_hline(yintercept=0, lty=2)+
+                geom_vline(xintercept=0, lty=2)+
+                theme_bw()
+        }
+}
+
+
+png.isoMDS <- function(dist, dim, ...){
+    library(MASS)
+    dist <- as.matrix(dist)
+    
+    if( length(rownames(dist))>0 ){
+        Label <- rownames(dist)
+    } else {
+        Label <- seq_len(nrow(dist))
+    }
+    
+    isoMDS( dist+1e-5, k = ceiling(nrow(dist)/2), ... ) %$% 
+        {
+            .$points %>% 
+                magrittr::set_colnames(paste0("Dim", seq_len(ncol(.)) )) %>% 
+                data.frame(Label=Label, .) %>% 
+                as.data.frame %>% 
+                ggplot( aes_string(x=paste0("Dim", dim[1]), y=paste0("Dim", dim[2])) )+
+                xlab(paste0("Dim", dim[1], " (", round(apply(.$points, 2, function(x) sd(x)^2 )[dim[1]]/sum(apply(.$points, 2, function(x) sd(x)^2 )),3)*100 ,"%)"))+
+                ylab(paste0("Dim", dim[2], " (", round(apply(.$points, 2, function(x) sd(x)^2 )[dim[2]]/sum(apply(.$points, 2, function(x) sd(x)^2 )),3)*100 ,"%)"))+
+                geom_point(size=1, shape=3)+
+                geom_text(aes(label=Label), size=5,
+                          check_overlap = FALSE,
+                          # hjust = "center", vjust = "bottom",
+                          nudge_x = 0, nudge_y = 0.05)+
+                geom_hline(yintercept=0, lty=2)+
+                geom_vline(xintercept=0, lty=2)+
+                theme_bw()
+        }
+}
+
+
+
+png.sammon <- function(dist, dim, ...){
+    
+    library(MASS)
+    dist <- as.matrix(dist)
+    
+    if( length(rownames(dist))>0 ){
+        Label <- rownames(dist)
+    } else {
+        Label <- seq_len(nrow(dist))
+    }
+    
+    con <- sammon(dist, k=max(dim), ...) %$% 
+        {
+            .$points %>% 
+                magrittr::set_colnames(paste0("Dim", seq_len(max(dim)) )) %>% 
+                data.frame(Label=Label, .) %>% 
+                as.data.frame %>% 
+                ggplot( aes_string(x=paste0("Dim", dim[1]), y=paste0("Dim", dim[2])) )+
+                xlab(paste0("Dim", dim[1], " (", round(.$eig[dim[1]]/sum(.$eig),3)*100 ,"%)"))+
+                ylab(paste0("Dim", dim[2], " (", round(.$eig[dim[2]]/sum(.$eig),3)*100 ,"%)"))+
+                geom_point(size=1, shape=3)+
+                geom_text(aes(label=Label), size=5,
+                          check_overlap = FALSE,
+                          # hjust = "center", vjust = "bottom",
+                          nudge_x = 0, nudge_y = 0.05)+
+                geom_hline(yintercept=0, lty=2)+
+                geom_vline(xintercept=0, lty=2)+
+                theme_bw()
+        }
+}
+
+
+
 png.get_dim <- function(Vector){
   
   equation <- function(n){
