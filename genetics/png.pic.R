@@ -1,5 +1,5 @@
-png.pic <- function(maf, method=c("homo", "hetero", "pic")){
-  
+png.pic <- function(allele_frequency, method=c("homo", "hetero", "pic")){
+  af <- allele_frequency
   # png.pic(c(0.01, 0.12, 0.2, 0.67), "homo") # 0.5034
   # png.pic(c(0.01, 0.12, 0.2, 0.67), "hetero") # 0.4966
   # png.pic(c(0.01, 0.12, 0.2, 0.67), "pic") # 0.446507
@@ -11,18 +11,18 @@ png.pic <- function(maf, method=c("homo", "hetero", "pic")){
   
   switch(method,
          "pic"=sum(
-           apply( subset( expand.grid(seq_len(length(maf)), seq_len(length(maf))), Var1!=Var2 ), 1, function(y){
-             maf[y[1]]*maf[y[2]] * ( 1 - maf[y[1]]*maf[y[2]] )
+           apply( subset( expand.grid(seq_len(length(AF)), seq_len(length(AF))), Var1!=Var2 ), 1, function(y){
+             AF[y[1]]*AF[y[2]] * ( 1 - AF[y[1]]*AF[y[2]] )
            }) ),
          
          "hetero"=sum(
-           apply( subset( expand.grid(seq_len(length(maf)), seq_len(length(maf))), Var1!=Var2 ), 1, function(y){
-             maf[y[1]]*maf[y[2]]
+           apply( subset( expand.grid(seq_len(length(AF)), seq_len(length(AF))), Var1!=Var2 ), 1, function(y){
+             AF[y[1]]*AF[y[2]]
            }) ),
          
          "homo"=sum(
-           apply( subset( expand.grid(seq_len(length(maf)), seq_len(length(maf))), Var1==Var2 ), 1, function(y){
-             maf[y[1]]*maf[y[2]]
+           apply( subset( expand.grid(seq_len(length(AF)), seq_len(length(AF))), Var1==Var2 ), 1, function(y){
+             AF[y[1]]*AF[y[2]]
            }) )
   )
   
