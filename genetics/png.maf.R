@@ -2,7 +2,7 @@ png.maf <- function(xx, sep=""){
   
   # xx: vecor with c(GG, GC, CC, CC, CC)
   # This function will return 1e-22 for the SNP with no minor allele
-  
+  if(all(is.na(xx))) return(NA)
   if(length(unique(xx))<=1) return(1e-22)
   
   
