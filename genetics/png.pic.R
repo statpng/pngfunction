@@ -7,6 +7,8 @@ png.pic <- function(maf, method=c("homo", "hetero", "pic")){
   # PIC == 1 -> Marker would have an infinite number of allele
   # A PIC greather than 0.7 is considered to be highly informative
   
+  # c.f. Expected Heterozygosity: 1-sum(c(maf, 1-maf)^2)
+  
   switch(method,
          "pic"=sum(
            apply( subset( expand.grid(seq_len(length(maf)), seq_len(length(maf))), Var1!=Var2 ), 1, function(y){
