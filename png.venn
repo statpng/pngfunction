@@ -14,7 +14,7 @@ png.venndiagram <- function(set.list, ...){
   
   ## Example for exporting a pdf file
   # pdf(file="./Venndiagram.pdf", height = 5, width = 10)
-  out.venn %>% plot(labels = list(fontsize = 17), quantities = list(fontsize = 15)) )
+  out.venn %>% plot( labels = list(fontsize = 17), quantities = list(fontsize = 15) ) %>% print
   
   ## With a main title
   # gridExtra::grid.arrange(
