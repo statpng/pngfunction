@@ -4,3 +4,6 @@ Sys.setlocale("LC_ALL", "korean")
 
 
 # http://r-bong.blogspot.com/2016/03/rstudio_26.html
+
+# In bash shell
+LANG=ko_KR; export LANG   
