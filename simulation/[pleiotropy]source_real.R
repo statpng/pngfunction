@@ -751,9 +751,11 @@ png.get_lambda <-
       
       seq.lambda <- as.list(1:length(y.column.set))
       
+      setseed_init <- sample(1:100, 1)
       for (colcol in 1:length(y.column.set)) {
         FAMILY <- family[colcol]
         h <- unlist(y.column.set[colcol])
+        set.seed( setseed_init )
         
         lambda.vec <- NULL
         for (i in 1:iter) {
