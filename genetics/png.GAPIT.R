@@ -1,4 +1,6 @@
 png.GAPIT <- function(x, y){
+    # x: hapmap-formatted myX data
+    # y: data.frame with the first column = "ID" and the others = "phenotypes"
     devtools::source_url("https://raw.githubusercontent.com/statpng/pngfunction/master/png.GAPIT_source.R")
     # source("./[CODE]GAPIT_source.R")
     library(dplyr)
