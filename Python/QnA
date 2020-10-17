@@ -1,0 +1,6 @@
+# Remove all object in python
+# equivalent to rm(list=ls()) in R
+
+for v in dir(): del globals()[v]
+
+
