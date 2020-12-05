@@ -1,29 +1,29 @@
 # https://theorydb.github.io/dev/2020/02/14/dev-dl-setting-local-python/
 
-conda create -n Tensorflow python=3.7
-# conda env remove --name Tensorflow
-conda activate Tensorflow
-conda install -n Tensorflow ipython notebook jupyter 
+conda create -n tf python=3.7
+# conda env remove --name tensorflow
+conda activate tf
+conda install -n tf ipython notebook jupyter 
 
-conda install -n Tensorflow numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
-conda install -n Tensorflow tensorflow
+conda install -n tf numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
+conda install -n tf tensorflow-gpu==1.7
 
 pip install gast==0.2.2
 pip install tensorboard==2.1.0
 
-python -m ipykernel install --user --name Tensorflow --display-name "Tensorflow"
-# jupyter kernelspec uninstall Tensorflow 
+python -m ipykernel install --user --name tf --display-name "tf"
+# jupyter kernelspec uninstall tf
 # jupyter kernelspec list
 
 
 
-conda create -n Tensorflow2.0 python=3.7
-# conda env remove --name Tensorflow2.0
-conda activate Tensorflow2.0
-conda install -n Tensorflow2.0 ipython notebook jupyter 
+conda create -n tf2.0 python=3.7
+# conda env remove --name tf2.0
+conda activate tf2.0
+conda install -n tf2.0 ipython notebook jupyter 
 
-conda install -n Tensorflow2.0 numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
-conda install -n Tensorflow2.0 tensorflow
+conda install -n tf2.0 numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
+conda install -n tf2.0 tensorflow
 
 pip uninstall pyzmq
 pip install pyzmq
@@ -31,8 +31,8 @@ pip install pyzmq
 pip install gast==0.2.2
 pip install tensorboard==2.1.0
 
-python -m ipykernel install --user --name Tensorflow2.0 --display-name "Tensorflow2.0"
-# jupyter kernelspec uninstall Tensorflow2.0 
+python -m ipykernel install --user --name tf2.0 --display-name "tf2.0"
+# jupyter kernelspec uninstall tf2.0 
 # jupyter kernelspec list
 
 
