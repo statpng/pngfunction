@@ -1,15 +1,15 @@
 # https://theorydb.github.io/dev/2020/02/14/dev-dl-setting-local-python/
 
-conda create -n tf python=3.7
+conda create -n tf python=3.6
 # conda env remove --name tensorflow
 conda activate tf
 conda install -n tf ipython notebook jupyter 
 
 conda install -n tf numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
-conda install -n tf tensorflow-gpu==1.7
+conda install -n tf tensorflow-gpu==1.8
 
-pip install gast==0.2.2
-pip install tensorboard==2.1.0
+# pip install gast==0.2.2
+# pip install tensorboard==2.1.0
 
 python -m ipykernel install --user --name tf --display-name "tf"
 # jupyter kernelspec uninstall tf
@@ -23,13 +23,13 @@ conda activate tf2.0
 conda install -n tf2.0 ipython notebook jupyter 
 
 conda install -n tf2.0 numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
-conda install -n tf2.0 tensorflow
+conda install -n tf2.0 tensorflow-cpu
 
 pip uninstall pyzmq
 pip install pyzmq
 
-pip install gast==0.2.2
-pip install tensorboard==2.1.0
+# pip install gast==0.2.2
+# pip install tensorboard==2.1.0
 
 python -m ipykernel install --user --name tf2.0 --display-name "tf2.0"
 # jupyter kernelspec uninstall tf2.0 
@@ -45,8 +45,8 @@ conda install -n PyTorch ipython notebook jupyter
 conda install -n PyTorch numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
 conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 
-pip uninstall pyzmq
-pip install pyzmq
+# pip uninstall pyzmq
+# pip install pyzmq
 
 python -m ipykernel install --user --name PyTorch --display-name "PyTorch"
 # jupyter kernelspec uninstall PyTorch
