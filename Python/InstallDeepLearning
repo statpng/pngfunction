@@ -1,19 +1,104 @@
 # https://theorydb.github.io/dev/2020/02/14/dev-dl-setting-local-python/
 
-conda create -n tf python=3.6
-# conda env remove --name tensorflow
-conda activate tf
-conda install -n tf ipython notebook jupyter 
 
-conda install -n tf numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
-conda install -n tf tensorflow-gpu==1.8
+# First, run Command Prompt (CMD) as a administrator
+
+# -----------------------------------------------------
+# Tensorflow 2.0 - cpu
+# -----------------------------------------------------
+
+conda create -n tf2.0-cpu python=3.6
+# conda env remove --name tf2.0-cpu
+conda activate tf2.0-cpu
+
+# -----------------------------------------------------
+# for jupyter notebook server
+# -----------------------------------------------------
+# conda install -n tf2.0-cpu ipython notebook jupyter 
+# -----------------------------------------------------
+
+
+conda install -n tf2.0-cpu numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
+conda install keras
+conda install theano
+pip install tensorflow-cpu==2.3.0
+
+
+# -----------------------------------------------------
+# You can add this env into the kernel list by:
+# -----------------------------------------------------
+python -m ipykernel install --user --name tf2.0-cpu --display-name "tf2.0-cpu"
+# jupyter kernelspec uninstall tf2.0-cpu
+# jupyter kernelspec list
+# -----------------------------------------------------
+
+
+# -----------------------------------------------------
+# End
+# -----------------------------------------------------
+
+
+
+
+
+# -----------------------------------------------------
+# Tensorflow 2.0 - gpu
+# -----------------------------------------------------
+
+conda create -n tf2.0--gpu python=3.6
+# conda env remove --name tf2.0--gpu
+conda activate tf2.0--gpu
+
+# -----------------------------------------------------
+# for jupyter notebook server
+# -----------------------------------------------------
+# conda install -n tf2.0--gpu ipython notebook jupyter 
+# -----------------------------------------------------
+
+conda install -n tf2.0--gpu numpy scipy matplotlib pandas seaborn scikit-learn h5py pillow tqdm
+# conda uninstall theano
+conda install theano
+conda install keras
+# [ERROR] To manually release the lock, delete: refer to https://github.com/keras-team/keras/issues/4558
+
+# pip uninstall tensorflow-estimator tensorboard tb-nightly tf-estimator-nightl
+# pip install tensorflow-estimator tensorboard tb-nightly
 
 # pip install gast==0.2.2
 # pip install tensorboard==2.1.0
 
-python -m ipykernel install --user --name tf --display-name "tf"
+conda install astunparse
+conda install tensorflow-gpu==2.1.0
+# pip vs conda ---------------
+# https://antilibrary.org/2378
+# ----------------------------
+
+# -----------------------------------------------------
+# You can add this env into the kernel list by:
+# -----------------------------------------------------
+python -m ipykernel install --user --name tf2.0--gpu --display-name "tf2.0--gpu"
 # jupyter kernelspec uninstall tf
 # jupyter kernelspec list
+# -----------------------------------------------------
+
+# -----------------------------------------------------
+# Check whether GPU is available
+# -----------------------------------------------------
+from tensorflow.python.client import device_lib
+device_lib.list_local_devices()
+# -----------------------------------------------------
+
+# -----------------------------------------------------
+# End
+# -----------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
@@ -52,4 +137,66 @@ python -m ipykernel install --user --name PyTorch --display-name "PyTorch"
 # jupyter kernelspec uninstall PyTorch
 # jupyter kernelspec list
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from keras.layers import Input, Dense
+from keras.models import Model
+from keras.models import load_model
+from keras.callbacks import ModelCheckpoint
+from keras.datasets import mnist
+import numpy as np
+import tensorflow
+
+image_dim = 784;
+batch_size = 10;
+input_img = Input(shape=(image_dim,))
+
+encoded = Dense(256, activation='relu')(input_img)
+encoded = Dense(64, activation='relu')(encoded)
+encoded = Dense(16, activation='relu')(encoded)
+encoded = Dense(4, activation='relu')(encoded)
+
+#decoding
+decoded = Dense(16, activation='relu')(encoded)
+decoded = Dense(64, activation='relu')(decoded)
+decoded = Dense(256, activation='relu')(decoded)
+decoded = Dense(image_dim, activation='sigmoid')(decoded)
+
+autoencoder = Model(input=input_img, output=decoded)
+
+autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
+
+'''
+saves the model weights after each epoch if the validation loss decreased
+'''
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+x_train = x_train.astype('float32') / 255.
+x_test = x_test.astype('float32') / 255.
+x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
+
+
+model_path = "weights.hdf5"
+checkpointer = ModelCheckpoint(filepath=model_path, verbose=1)
+
+autoencoder.fit(x_train, x_train,
+        shuffle=True,
+        nb_epoch=100,
+        batch_size=batch_size,
+        validation_data=(x_test, x_test),
+        callbacks=[checkpointer])
 
