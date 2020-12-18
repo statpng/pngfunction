@@ -16,15 +16,19 @@ startDt <- 19810101
 endDt <- 20191231
 stnIds <- 108
 
-png.get_API <- function(api_key,
-                        serviceURL,
-                        numOfRows,
-                        dataType,
-                        dataCd,
-                        dateCd,
-                        startDt,
-                        endDt,
-                        stnIds){
+library(XML)
+png.get_API()
+png.get_API <- function(
+                        # api_key,
+                        # serviceURL,
+                        # numOfRows,
+                        # dataType,
+                        # dataCd,
+                        # dateCd,
+                        # startDt,
+                        # endDt,
+                        # stnIds
+                        ){
   
   url <- paste0( serviceURL, 
                  "?serviceKey=", api_key,
@@ -48,6 +52,7 @@ png.get_API <- function(api_key,
   
   totalData <- NULL
   for(i in 1:loopCount){
+    cat(i, "/", loopCount, "\n")
     url <- paste0( serviceURL, 
                    "?serviceKey=", api_key,
                    "&pageNo=", 1,
@@ -67,4 +72,5 @@ png.get_API <- function(api_key,
     totalData <- rbind( totalData, xmlData)
   }
   
+  write.csv(totalData, file=paste0(Sys.time(), ".csv"))
 }
