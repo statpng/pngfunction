@@ -1,5 +1,6 @@
 # Library Load
 rm(list=ls())
+# Sys.setlocale("LC_ALL", "korean")
 
 # 종합기상관측 (Automated Synoptic Observing System; ASOS)
 # https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmNo=36
@@ -72,5 +73,6 @@ png.get_API <- function(
     totalData <- rbind( totalData, xmlData)
   }
   
-  write.csv(totalData, file=paste0(Sys.time(), ".csv"))
+  
+  write.csv(totalData, file=paste0(gsub(":", "-", Sys.time()), ".csv"))
 }
