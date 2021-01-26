@@ -1,0 +1,11 @@
+
+pip install sklearn pandas numpy
+pip install seaborn matplotlib 
+pip install GPyOpt
+conda install -c conda-forge gpyopt
+pip install IPython display datetime tqdm missingno
+
+
+# lightgbm 설치
+# https://tootouch.github.io/setting/lightgbm_gpu/
+pip install lightgbm --install-option=--gpu
