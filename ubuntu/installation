@@ -25,53 +25,16 @@ $ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9 --slave /
 $ sudo update-alternatives --config gcc
 $ 0
 
-## python dependency packages 설치하기
-$ sudo apt install -y zlib1g-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev libffi-dev curl file git python3-pip make build-essential
-
-$ sudo pip3 install virtualenvwrapper
-
-
-## pyenv 설치하기
-$ curl https://pyenv.run | bash
-
-$ echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
-
-$ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-
-$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
-
-$ source ~/.bashrc
-
-## python 3.7 설치하기
-- Refer to the following url for checking the python version for tensorflow: https://www.tensorflow.org/install/pip?hl=ko
-$  pyenv install 3.7.7
-
-### python3를 default로 사용하기
-$ sudo apt install python-is-python3
-
-$ python -V
-
-
-## 가상환경 구축
-$ pyenv virtualenv 3.7.7 tf2
-
-$ pyenv versions
-
-- Activate the virtual environment
-$ pyenv global tf2
-
-- Deactivate the virtual environment
-$ pyenv global system
 
 
 ## 그래픽카드 드라이버 설치
 
-### 버전 확인 (recommended 보면 됨)
+### 버전 확인 (recommended 보면 됨) --> GTX 1660 ==> 460
 $ ubuntu-drivers devices
 
 
 ### 해당 버전의 드라이버 설치하기
-$ sudo apt install nvidia-driver-440
+$ sudo apt install nvidia-driver-460
 
 
 ### 재부팅
@@ -83,7 +46,7 @@ $ nvidia-smi
 
 ## CUDA Toolkit 설치 (CUDA toolkit 10.1 --> gcc 8)
 $ sudo update-alternatives --config gcc
-$ 1
+$ 0
 
 ### gcc 버전 == 8 확인
 $ gcc --version
@@ -91,6 +54,20 @@ $ gcc --version
 ### 다음 링크에 접속하여 10.1 update2를 클릭합니다. 
 
 https://developer.nvidia.com/cuda-toolkit-archive
+
+
+
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda-repo-ubuntu2004-11-2-local_11.2.0-460.27.04-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2004-11-2-local_11.2.0-460.27.04-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu2004-11-2-local/7fa2af80.pub
+sudo apt-get update
+sudo apt-get -y install cuda
+
+
+
+
 
 
 ### 설치프로그램 다운로드 및 실행
@@ -107,6 +84,11 @@ $ echo 'export PATH=$PATH:/usr/local/cuda-10.1/bin' >> ~/.bash_profile
 $ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.1/lib64' >> ~/.bash_profile
 $ echo 'export CUDADIR=/usr/local/cuda-10.1' >> ~/.bash_profile
 $ source ~/.bash_profile
+
+
+
+
+
 
 
 
@@ -180,3 +162,88 @@ $ echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
 
 $ nvcc --version
 nvidia-smi
+
+
+
+
+
+
+
+
+
+
+
+# Python 가상환경 구축
+
+## python dependency packages 설치하기
+$ sudo apt install -y zlib1g-dev libbz2-dev libreadline-dev libssl-dev libsqlite3-dev libffi-dev curl file git python3-pip make build-essential
+
+$ sudo pip3 install virtualenvwrapper
+
+
+## pyenv 설치하기
+$ curl https://pyenv.run | bash
+
+$ echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+
+$ source ~/.bashrc
+
+## python 3.7 설치하기
+- Refer to the following url for checking the python version for tensorflow: https://www.tensorflow.org/install/pip?hl=ko
+$  pyenv install 3.7.7
+
+### python3를 default로 사용하기
+$ sudo apt install python-is-python3
+
+$ python -V
+
+
+## 가상환경 구축
+$ pyenv virtualenv 3.7.7 tf2
+
+$ pyenv versions
+
+- Activate the virtual environment
+$ pyenv global tf2
+
+- Deactivate the virtual environment
+$ pyenv global system
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Light-gbm 설치
+
+## cmake 설치
+
+$ sudo apt-get install cmake
+
+$ git clone --recursive https://github.com/microsoft/LightGBM ; cd LightGBM
+$ mkdir build ; cd build
+$ cmake ..
+$ make -j4
+
+
+## Dependency packages 설치
+
+$ pip install setuptools numpy scipy scikit-learn
+$ cd python-package/
+$ sudo python setup.py install --precompile
+
+
+
+
+
