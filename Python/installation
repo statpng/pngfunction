@@ -9,3 +9,5 @@ pip install IPython display datetime tqdm missingno
 # lightgbm 설치
 # https://tootouch.github.io/setting/lightgbm_gpu/
 pip install lightgbm --install-option=--gpu
+# pip install lightgbm --install-option=--gpu --install-option="--opencl-include-dir=/usr/local/cuda/include/" --install-option="--opencl-library=/usr/local/cuda/lib64/libOpenCL.so"
+
