@@ -14,7 +14,7 @@ https://www.kaggle.com/kirankunapuli/ieee-fraud-lightgbm-with-gpu
 - https://stackoverflow.com/questions/50627963/lightgbmerror-bno-opencl-device-found
 
 
-₩₩₩
+```
 import lightgbm as lgb
 import seaborn as sns
 
@@ -59,4 +59,4 @@ model = lgb.train(
                         verbose_eval    = 200, 
                         early_stopping_rounds = 10
                         )
-₩₩₩     
+```
