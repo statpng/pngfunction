@@ -4,11 +4,16 @@
 
 - [우분투 도커 설치 using 캐글 이미지 with CPU/GPU 버전](https://teddylee777.github.io/linux/docker%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EB%94%A5%EB%9F%AC%EB%8B%9D-%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1.md)
 
+
+
+
 # Jupyter
 
 # LightGBM with GPU
 https://www.kaggle.com/kirankunapuli/ieee-fraud-lightgbm-with-gpu
 
+## INSTALL NVIDIA GRAPHIC DRIVER
+- https://inpages.tistory.com/149
 ## cmake에서 libOpenCL.so 대신 libOpenCL.so.1 사용하기
 - cmake -DUSE_GPU=1 -DOpenCL_LIBRARY=/usr/local/cuda-11.1/lib64/libOpenCL.so.1 -DOpenCL_INCLUDE_DIR=/usr/local/cuda-11.1/include/ ..
 - https://stackoverflow.com/questions/50627963/lightgbmerror-bno-opencl-device-found
@@ -60,3 +65,4 @@ model = lgb.train(
                         early_stopping_rounds = 10
                         )
 ```
+
