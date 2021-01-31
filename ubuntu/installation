@@ -27,7 +27,7 @@ $ 0
 
 
 
-## 그래픽카드 드라이버 설치
+## 그래픽카드 NVIDIA 드라이버 설치
 
 ### 버전 확인 (recommended 보면 됨) --> GTX 1660 ==> 460
 $ ubuntu-drivers devices
@@ -40,28 +40,30 @@ $ sudo apt install nvidia-driver-460
 ### 재부팅
 $ reboot
 
+
 ### 설치된 드라이버 버전 확인
 $ nvidia-smi
 
 
-## CUDA Toolkit 설치 (CUDA toolkit 10.1 --> gcc 8)
+
+# CUDA toolkit 11.1 설치
+
+## CUDA Toolkit 설치 (CUDA toolkit 11.1 --> gcc 9)
 $ sudo update-alternatives --config gcc
 $ 0
 
-### gcc 버전 == 8 확인
+### gcc 버전 == 9 확인
 $ gcc --version
 
-### 다음 링크에 접속하여 10.1 update2를 클릭합니다. 
-
+### 다음 링크에 접속하여 11.1를 클릭합니다. 
 https://developer.nvidia.com/cuda-toolkit-archive
 
-
-
+# https://developer.nvidia.com/cuda-11.1.0-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=2004&target_type=deblocal
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda-repo-ubuntu2004-11-2-local_11.2.0-460.27.04-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu2004-11-2-local_11.2.0-460.27.04-1_amd64.deb
-sudo apt-key add /var/cuda-repo-ubuntu2004-11-2-local/7fa2af80.pub
+wget https://developer.download.nvidia.com/compute/cuda/11.1.0/local_installers/cuda-repo-ubuntu2004-11-1-local_11.1.0-455.23.05-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2004-11-1-local_11.1.0-455.23.05-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu2004-11-1-local/7fa2af80.pub
 sudo apt-get update
 sudo apt-get -y install cuda
 
@@ -80,10 +82,12 @@ $ sudo ./cuda_10.1.243_418.87.00_linux.run
 
 ### 환경변수 추가
 
-$ echo 'export PATH=$PATH:/usr/local/cuda-10.1/bin' >> ~/.bash_profile
-$ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.1/lib64' >> ~/.bash_profile
-$ echo 'export CUDADIR=/usr/local/cuda-10.1' >> ~/.bash_profile
-$ source ~/.bash_profile
+echo 'export PATH=$PATH:/usr/local/cuda-11.1/bin' >> ~/.bash_profile
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.1/lib64' >> ~/.bash_profile
+echo 'export CUDADIR=/usr/local/cuda-11.1' >> ~/.bash_profile
+source ~/.bash_profile
+
+
 
 
 
@@ -231,10 +235,21 @@ $ pyenv global system
 
 $ sudo apt-get install cmake
 
+
+### CPU version
 $ git clone --recursive https://github.com/microsoft/LightGBM ; cd LightGBM
 $ mkdir build ; cd build
 $ cmake ..
 $ make -j4
+
+
+### GPU version
+git clone --recursive https://github.com/microsoft/LightGBM ; cd LightGBM
+mkdir build ; cd build
+cmake -DUSE_GPU=1 ..
+# if you have installed NVIDIA CUDA to a customized location, you should specify paths to OpenCL headers and library like the following:
+# cmake -DUSE_GPU=1 -DOpenCL_LIBRARY=/usr/local/cuda/lib64/libOpenCL.so -DOpenCL_INCLUDE_DIR=/usr/local/cuda/include/ ..
+make -j4
 
 
 ## Dependency packages 설치
