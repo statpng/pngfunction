@@ -22,7 +22,8 @@ jupyter notebook --generate-config
 vi /home/png/.jupyter/jupyter_notebook_config.py
 
 c.NotebookApp.allow_origin = '*'
-c.NotebookApp.notebook_dir = ''
+c.NotebookApp.ip = "164.125.33.81"
+c.NotebookApp.notebook_dir = '/home/png/mnt/0.Server'
 c.NotebookApp.password = 'sha1:cb83593a2d4e:6c760817eeb13aa958bc1422454d905ba479378b'
 c.NotebookApp.open_browser = False
 
@@ -34,7 +35,8 @@ jupyter lab --generate-config
 
 vi /home/png/.jupyter/jupyter_lab_config.py
 c.NotebookApp.allow_origin = '*'
-c.NotebookApp.notebook_dir = ''
+c.NotebookApp.ip = "164.125.33.81"
+c.NotebookApp.notebook_dir = '/home/png/mnt/0.Server'
 c.NotebookApp.password = 'sha1:cb83593a2d4e:6c760817eeb13aa958bc1422454d905ba479378b'
 c.NotebookApp.open_browser = False
 
