@@ -6,4 +6,7 @@
 
 # Jupyter
 
+# LightGBM with GPU
+https://www.kaggle.com/kirankunapuli/ieee-fraud-lightgbm-with-gpu
+
 
