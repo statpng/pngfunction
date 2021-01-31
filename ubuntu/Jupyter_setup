@@ -1,0 +1,35 @@
+# Jupyter notebook & lab 설치
+
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo apt-get install jupyterlab
+
+
+# Jupyter notebook 설정
+jupyter notebook --generate-config
+
+
+vi /home/png/.jupyter/jupyter_notebook_config.py
+
+c.NotebookApp.allow_origin = '*'
+c.NotebookApp.notebook_dir = ''
+c.NotebookApp.password = 'sha1:cb83593a2d4e:6c760817eeb13aa958bc1422454d905ba479378b'
+c.NotebookApp.open_browser = False
+
+
+
+# Jupyter lab 설정 (출처: https://torrms.tistory.com/46)
+
+jupyter lab --generate-config
+
+vi /home/png/.jupyter/jupyter_lab_config.py
+c.NotebookApp.allow_origin = '*'
+c.NotebookApp.notebook_dir = ''
+c.NotebookApp.password = 'sha1:cb83593a2d4e:6c760817eeb13aa958bc1422454d905ba479378b'
+c.NotebookApp.open_browser = False
+
+
+jupyter notebook --ip=164.125.33.81 --port=8888 --no-browser
+sudo jupyter notebook --allow-root --ip=164.125.33.81 --port=8888 --no-browser
+
