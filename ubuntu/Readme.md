@@ -16,6 +16,10 @@
 ## Jupyter
 
 - `jupyter kernelspec list`
+- `nohup jupyter notebook &`
+- `jupyter-lab list`
+
+
 
 ### [Jupyter notebook에 R 추가하기](https://yahwang.github.io/posts/27)
 
