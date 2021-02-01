@@ -18,7 +18,10 @@
 - `jupyter kernelspec list`
 - `nohup jupyter notebook &`
 - `jupyter-lab list`
-
+- `jupyter --paths`
+- `jupyter notebook stop [port number]`
+- `lsof -i :8888`
+- `kill -9 $(lsof -i :8888 | sed -n 2p | awk -F ' ' '{print $2}')`
 
 
 ### [Jupyter notebook에 R 추가하기](https://yahwang.github.io/posts/27)
