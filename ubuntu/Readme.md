@@ -7,7 +7,7 @@
 
 ### Start script and service when boot
 - [부팅 시 자동 시작되는 스크립트](https://nobilitycat.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%8B%9C%EC%9E%91-%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C-%EC%8B%A4%ED%96%89-%EB%90%A0-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EB%93%B1%EB%A1%9D%ED%95%98%EA%B8%B0)
-```
+```bash
 cd /etc/init.d
 touch start.sh
 cat "nohup jupyter lab &" >> start.sh
