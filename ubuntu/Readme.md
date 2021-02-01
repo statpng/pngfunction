@@ -15,7 +15,7 @@
 
 ## Jupyter
 
-- `kernelspec list`
+- `jupyter kernelspec list`
 
 ### [Jupyter notebook에 R 추가하기](https://yahwang.github.io/posts/27)
 
