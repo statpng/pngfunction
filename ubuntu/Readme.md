@@ -19,10 +19,12 @@ update-rc.d start.sh defaults
 ## Pyenv
 
 ## 도커
-
+- [도커 설치](https://blog.cosmosfarm.com/archives/248/%EC%9A%B0%EB%B6%84%ED%88%AC-18-04-%EB%8F%84%EC%BB%A4-docker-%EC%84%A4%EC%B9%98-%EB%B0%A9%EB%B2%95/)
 - [우분투 도커 설치 using 캐글 이미지 with CPU/GPU 버전](https://teddylee777.github.io/linux/docker%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EB%94%A5%EB%9F%AC%EB%8B%9D-%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1.md)
 
 
+## pyenv 설치
+ - [pyenv 설치](https://nachwon.github.io/pyenv-virtualenv/)
 
 
 ## Jupyter
