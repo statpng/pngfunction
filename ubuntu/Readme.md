@@ -15,6 +15,8 @@ chmod 755 start.sh
 update-rc.d start.sh defaults
 ```
 
+## [R 최신버전 설치](https://wikidocs.net/52543)
+
 
 ## Pyenv
 
