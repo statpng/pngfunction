@@ -1,6 +1,6 @@
 ## Sublime text 3
 ### [Sublime text setting](https://lazyren.github.io/devlog/sublime-text-setting.html)
-
+### [Running R in Sublime text](https://hyeonsig.tistory.com/entry/research-note-using-r-in-sublime-text-3)
 
 ## R
 ### [Install R]()
