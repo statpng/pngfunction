@@ -20,5 +20,5 @@ WARNING: You're using a non-UTF8 locale, therefore only ASCII characters will wo
 
 ### Running R on Terminal 
 ``` bash
-export PATH="/Library/Frameworks/R.framework/Resources/bin:$PATH"
+echo 'export PATH="/Library/Frameworks/R.framework/Resources/bin:$PATH"' >> ~/.zprofile
 ```
