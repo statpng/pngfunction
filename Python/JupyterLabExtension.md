@@ -1,5 +1,5 @@
 ### Update of PIP
-```
+```shell
 pip install --upgrade pip
 python -m pip install --upgrade pip
 ```
