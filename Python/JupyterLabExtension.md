@@ -1,3 +1,42 @@
+## 기풍
+
+```
+conda create -n "py38" python=3.8
+conda activate py38 
+
+pip install --upgrade pip
+python -m pip install --upgrade pip
+
+pip install jupyterlab
+pip install --upgrade jupyterlab
+
+pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
+
+jupyter labextension install @jupyterlab/toc
+jupyter labextension install @jupyterlab/shortcutui
+jupyter labextension install @lckr/jupyterlab_variableinspector
+jupyter labextension install @krassowski/jupyterlab_go_to_definition
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install lineup_widget
+jupyter labextension install @jupyterlab/github
+
+pip install nbresuse
+jupyter labextension install jupyterlab-topbar-extension jupyterlab-system-monitor
+jupyter labextension install jupyterlab_filetree
+conda install --yes jupyter-archive
+
+jupyter lab build
+jupyter labextension update --all
+
+
+
+```
+
+
+
+## 호영
+
 ### Update of PIP
 ```
 pip install --upgrade pip
