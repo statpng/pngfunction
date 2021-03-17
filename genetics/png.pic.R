@@ -1,5 +1,5 @@
 png.pic <- function(allele_frequency, method=c("homo", "hetero", "pic")){
-  af <- allele_frequency
+  AF <- allele_frequency
   # png.pic(c(0.01, 0.12, 0.2, 0.67), "homo") # 0.5034
   # png.pic(c(0.01, 0.12, 0.2, 0.67), "hetero") # 0.4966
   # png.pic(c(0.01, 0.12, 0.2, 0.67), "pic") # 0.446507
@@ -27,3 +27,9 @@ png.pic <- function(allele_frequency, method=c("homo", "hetero", "pic")){
   )
   
 }
+
+
+# install.packages("genetics")
+# library(genetics)
+# Geno <- genotype(c("AA", "AG", "GG", "AA", "AG", "AG", "AG"), sep="")
+# summary(Geno)
