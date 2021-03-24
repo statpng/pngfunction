@@ -8,7 +8,8 @@ python -m pip install --upgrade pip
 sudo apt-get -y install ipython ipython-notebook
 
 sudo -H pip3 install jupyter
-sudo apt-get install jupyterlab
+sudo -H pip3 install jupyterlab
+# sudo apt-get install jupyterlab
 
 
 # 아래의 명령어들은 jupyter를 사용하는데 도움을 주는 플러그인들에 대한 설치 명령입니다.
