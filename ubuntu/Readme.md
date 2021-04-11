@@ -4,6 +4,7 @@
 - ` ps -aux `
 - ` df -h `
 - ` du -sh ./* `
+
 ### Useful packages
 - [CPU Temperature Monitor](https://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature)
 ### Start script and service when boot
@@ -15,6 +16,9 @@ cat "nohup jupyter lab &" >> start.sh
 chmod 755 start.sh
 update-rc.d start.sh defaults
 ```
+
+## [하드디스크 추가](http://blog.naver.com/PostView.nhn?blogId=jonghong0316&logNo=140146721316)
+
 
 ## [R 최신버전 설치](https://wikidocs.net/52543)
 
