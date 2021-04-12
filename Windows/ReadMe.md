@@ -1,7 +1,7 @@
 ## Programs
 
-AcrobatPro 10
-Mathpix snip
+AcrobatPro 10 \\
+Mathpix snip \\
 Microsoft Office Professional Plus 2013 (x64)
 RBTray-4_3
 ReIcon
