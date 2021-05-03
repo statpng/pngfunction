@@ -179,3 +179,22 @@ png.order <- function(x){
 	library(gtools)
 	mixedorder(x)
 }
+		
+		
+		
+		
+		
+		
+		
+
+# Histogram of Exam Scores
+dat <- c(14,16,5,6,14,6,7,4,6,9,15,11,14,25,2,12,24,12,19,20,18,26,0,19,5,8)
+table(dat)
+require(ggplot2)
+ggplot(data.frame(Score=dat),
+       aes(x = Score)) + geom_dotplot(binwidth = 1.0) +
+  scale_discrete_manual(0:21) +
+  ylab(NULL) +
+  theme( axis.line.y = element_blank() ) +
+  theme_bw(base_size = 14)
+
