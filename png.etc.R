@@ -188,13 +188,26 @@ png.order <- function(x){
 		
 
 # Histogram of Exam Scores
+maximum <- 30
 dat <- c(14,16,5,6,14,6,7,4,6,9,15,11,14,25,2,12,24,12,19,20,18,26,0,19,5,8)
+xaxis <- seq((min(dat)%/%5)*5, (maximum%/%5+1)*5, by=5)
+
+MAX <- max(xaxis)
+MIN <- min()
+
 table(dat)
 require(ggplot2)
 ggplot(data.frame(Score=dat),
        aes(x = Score)) + geom_dotplot(binwidth = 1.0) +
-  scale_discrete_manual(0:21) +
+  geom_text(aes( label=paste0("Top Score: a perfect ", max(dat), " points"), x=MAX, y=0.99 ), hjust="inward", vjust="inward", size=6) +
+  # scale_discrete_manual(0:21) +
   ylab(NULL) +
+  labs( title="Stat - Homework13" ) +
   theme( axis.line.y = element_blank() ) +
-  theme_bw(base_size = 14)
+  theme_light(base_size = 14) +
+  scale_x_continuous(limits = c(MIN, MAX), breaks = xaxis) + 
+  ggsave("Biostat_Homework03.pdf", height=4, width=10)
+  # scale_x_continuous(breaks = c(min(dat), xaxis, maximum))
+  # coord_cartesian(xlim = c(20, 48) )
+  # expand_limits(x=c(min(dat), maximum))
 
