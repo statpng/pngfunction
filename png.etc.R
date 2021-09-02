@@ -155,6 +155,7 @@ png.replace = function(x, list, b, nonamed=FALSE){
 
 
 png.cut = function(x, n, nonamed=FALSE){
+  if( is.data.frame(x) ) x <- unlist(x)
   res = x
   x = as.numeric(na.omit(x))	
   res[!is.na(res)] = cut( x, seq( floor(min(x)), ceiling(max(x)*1.000000001), length.out=n+1), right=FALSE)
