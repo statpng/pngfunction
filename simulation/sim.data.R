@@ -375,6 +375,6 @@ sim.data <- function(n, p, q, snp.rho, y.rho, maf.min,
 
 
 
-Data <- sim.data(100, 6000, 8, 0.95, 0.1, 0.05, 
-                 scenario = "scenarioC", response.type = "mixed", 2:6*0.25)
+# Data <- sim.data(100, 6000, 8, 0.95, 0.1, 0.05, 
+#                  scenario = "scenarioC", response.type = "mixed", 2:6*0.25)
 
