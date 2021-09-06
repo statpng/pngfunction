@@ -8,6 +8,8 @@ sim.data <- function(n, p, q, snp.rho, y.rho, maf.min,
   # y.rho = runif(1, 0.0, 0.2)
   # mu <- c(0.5, 0.75, 1.0, 1.25, 1.5) #1:5*0.1
   
+  gamma = q/2
+  
   if( is.null(wh.true) ){
     wh.true <- rep(1:2, gamma/2) + rep( 1:(q/2)-1, each=gamma/q*2 )*2
   }
