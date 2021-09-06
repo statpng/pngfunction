@@ -1,6 +1,6 @@
 sim.data <- function(n, p, q, snp.rho, y.rho, maf.min, 
                      scenario = c("scenarioA", "scenarioB", "scenarioC"),
-                     response.type = c("continuous", "binary", "mixed"), mu, wh.true = NULL){
+                     response.type = c("continuous", "binary", "mixed"), gamma = 0.5, mu, wh.true = NULL){
   
   
   # n=400; p=40000;
@@ -8,7 +8,7 @@ sim.data <- function(n, p, q, snp.rho, y.rho, maf.min,
   # y.rho = runif(1, 0.0, 0.2)
   # mu <- c(0.5, 0.75, 1.0, 1.25, 1.5) #1:5*0.1
   
-  gamma = q/2
+  gamma = gamma * q
   
   if( is.null(wh.true) ){
     wh.true <- rep(1:2, gamma/2) + rep( 1:(q/2)-1, each=gamma/q*2 )*2
