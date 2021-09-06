@@ -1,6 +1,7 @@
 sim.data <- function(n, p, q, snp.rho, y.rho, maf.min, 
                      scenario = c("scenarioA", "scenarioB", "scenarioC"),
-                     response.type = c("continuous", "binary", "mixed"), gamma = 0.5, mu, wh.true = NULL){
+                     response.type = c("continuous", "binary", "mixed"), 
+                     n.binary = 4, gamma = 0.5, mu, wh.true = NULL){
   
   
   # n=400; p=40000;
