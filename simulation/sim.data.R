@@ -1,3 +1,5 @@
+library(mnormt)
+
 sim.data <- function(n, p, q, snp.rho, y.rho, maf.min, 
                      scenario = c("scenarioA", "scenarioB", "scenarioC"),
                      response.type = c("continuous", "binary", "mixed"), 
