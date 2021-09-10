@@ -1,4 +1,39 @@
 CTGSA <- function(x, y){
+  
+  soft <- function( cor, alpha ){
+    cornew <- max( abs(cor) - alpha, 0 )
+    cornew[ cornew < 0 ] <- 0
+    sign(cor) * cornew
+  }
+  
+  mcp <- function( cor, alpha , gamma=2 ){
+    if (alpha < cor & cor<= alpha*gamma) {
+      mcp <- (gamma/(gamma-1))*(1-alpha/cor)*cor
+    } else if (cor > alpha*gamma) {
+      mcp <- cor
+    } else #(0 < cor & cor <= alpha)
+    {mcp <- 0
+    }
+    return(mcp)
+  }
+  
+  scad <- function(cor, alpha , gamma=3.7){
+    if (0 < cor & cor <= 2*alpha) {
+      temp <- max(1-alpha/cor, 0)
+      if(temp>=0){
+        scad <- temp*cor
+      }else{
+        scad <- 0
+      }
+    }else if (2*alpha < cor & cor <= alpha*gamma){
+      scad <- (gamma/(gamma-2))*(1-1/gamma-alpha/cor)*cor
+    }else{
+      scad <- cor
+    }
+    return(scad)
+  }
+  
+  
   #case,control
   Cx1 = x[which(y==0),]
   Tx1 = x[which(y==1),]
@@ -59,9 +94,9 @@ CTGSA <- function(x, y){
   T_scad1=abs(scad_Tsv1[1] - scad_Csv1[1])
   T_TH1 = abs(Tsv1[1] - Csv1[1])
   
-  list(hard=T_TH1,
-       soft=T_soft1,
-       mcp=T_mcp1,
-       scad=T_scad1)
-  
+  list(stat=list(hard=T_TH1,
+                 soft=T_soft1,
+                 mcp=T_mcp1,
+                 scad=T_scad1),
+       params=list(x=x, y=y))
 }
