@@ -52,7 +52,7 @@ png.multhist <- function (x, beside = TRUE, freq = NULL, probability = !freq,
                                              plot = FALSE)[[comp]]))
     
     if( log2 ){
-      barplot.args$names.arg <- paste0( "[", log2( allhist$breaks ) %>% {.[-length(.)]}, ", ", log2( allhist$breaks )[-1], ")" )
+      barplot.args$names.arg <- paste0( "(", log2( allhist$breaks ) %>% {.[-length(.)]}, ", ", log2( allhist$breaks )[-1], "]" )
     }
     
     
