@@ -13,7 +13,7 @@
 # breaks = c(0, 2^(seq(-5, 0)))
 
 png.multhist <- function (x, beside = TRUE, freq = NULL, probability = !freq, 
-                          nclass=NULL, breaks=NULL, log=FALSE, plot.it = TRUE, ...){
+                          nclass=NULL, breaks=NULL, log2=FALSE, plot.it = TRUE, ...){
   hist.args <- formals(hist.default)
   args <- list(...)
   hargs <- names(args)[names(args) %in% names(hist.args)]
@@ -51,7 +51,7 @@ png.multhist <- function (x, beside = TRUE, freq = NULL, probability = !freq,
     combhist <- t(sapply(x, function(z) hist(z, breaks = allhist$breaks, 
                                              plot = FALSE)[[comp]]))
     
-    if( log ){
+    if( log2 ){
       barplot.args$names.arg <- paste0( "[", log2( allhist$breaks ) %>% {.[-length(.)]}, ", ", log2( allhist$breaks )[-1], ")" )
     }
     
