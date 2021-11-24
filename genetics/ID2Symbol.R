@@ -1,6 +1,8 @@
 library(dplyr)
 library("biomaRt") 
 
+# Input: Organism ("Mus musculus"), Platform ("Mouse430_2"), ID ("1416519_at", ...)
+
 listMarts()
 ensembl <- useMart("ensembl")
 datasets <- listDatasets(ensembl)
