@@ -1,9 +1,10 @@
+
 \newcommand{\ba}{  \boldsymbol{a} }
 \newcommand{\bb}{  \boldsymbol{b} }
 \newcommand{\bc}{  \boldsymbol{c} }
 \newcommand{\bd}{  \boldsymbol{d} }
 \newcommand{\be}{  \boldsymbol{e} }
-\newcommand{\bf}{  \boldsymbol{f} }
+\newcommand{\bbf}{  \boldsymbol{f} }
 \newcommand{\bg}{  \boldsymbol{g} }
 \newcommand{\bh}{  \boldsymbol{h} }
 \newcommand{\bi}{  \boldsymbol{i} }
@@ -53,12 +54,12 @@
 \newcommand{\bZ}{  \boldsymbol{Z} }
 
 \newcommand{\balpha}{  \boldsymbol{alpha} }
-\newcommand{\boldeta}{  \boldsymbol{beta} }
+\newcommand{\bbeta}{  \boldsymbol{beta} }
 \newcommand{\bgamma}{  \boldsymbol{gamma} }
 \newcommand{\bdelta}{  \boldsymbol{delta} }
 \newcommand{\bepsilon}{  \boldsymbol{epsilon} }
 \newcommand{\bzeta}{  \boldsymbol{zeta} }
-\newcommand{\beta}{  \boldsymbol{eta} }
+\newcommand{\boldeta}{  \boldsymbol{eta} }
 \newcommand{\btheta}{  \boldsymbol{theta} }
 \newcommand{\biota}{  \boldsymbol{iota} }
 \newcommand{\bkappa}{  \boldsymbol{kappa} }
@@ -106,7 +107,7 @@
 
 \newcommand{\A}{ \mathcal{A} }
 \newcommand{\E}{ \mathbb{E} }
-\newcommand{\L}{ \mathcal{L} }
+%\newcommand{\L}{ \mathcal{L} }
 \newcommand{\R}{ \mathbb{R} }
 \newcommand{\N}{ \mathcal{N} }
 \newcommand{\I}{ \mathbb{I} }
