@@ -1,0 +1,287 @@
+\documentclass[11pt]{beamer}
+\setbeamersize{text margin left=8mm,text margin right=5mm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+%\usepackage{enumitem}
+\usetheme{default}
+
+\usepackage{multirow, booktabs}
+
+\usepackage{bm}
+
+\newcommand\solidrule[1][.5cm]{\rule[0.5ex]{#1}{.8pt}}
+\newcommand\dashedrule{\mbox{ \solidrule[1.0mm]\hspace{1.0mm}\solidrule[1.0mm]\hspace{1.0mm}\solidrule[1.0mm]} }
+
+%\setbeamertemplate{caption}[numbered]
+%\usepackage{chngcntr}
+%\counterwithin{figure}{section}
+%\counterwithin{table}{section}
+
+
+%\useinnertheme[shadow=true]{rounded}
+%\usefonttheme[onlymath]{serif}
+%\usepackage{fontspec}
+%\setmainfont{Times New Roman}
+\usepackage{xcolor}
+%black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, olive, orange, pink, purple, red, teal, violet, white, yellow.
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{reddishpurple}{rgb}{0.8, 0.47, 0.65}
+\usepackage{subcaption}
+\usepackage{blkarray}
+\usepackage{threeparttable}
+
+\newcommand\T{\rule{0pt}{2.6ex}}       % Top strut
+\newcommand\B{\rule[-1.2ex]{0pt}{0pt}} % Bottom strut
+\newcommand{\bluesquare}{\textcolor{blue}{\scalebox{0.6}{$\blacksquare$}}}
+\newcommand{\redsquare}{\textcolor{red}{\scalebox{0.6}{$\blacksquare$}}}
+\newcommand{\bluetriangle}{\textcolor{blue}{\scalebox{1.0}{$\blacktriangleright$}}}
+\newcommand{\redtriangle}{\textcolor{red}{\scalebox{1.0}{$\blacktriangleright$}}}
+
+
+%\usepackage{natbib}
+%\usepackage[style=nature,backend=bibtex]{biblatex}
+%\usepackage[style=authoryear,backend=bibtex]{biblatex}
+%\usepackage[style=verbose,backend=bibtex]{biblatex}
+%\usepackage[style=numeric, backend=bibtex]{biblatex}
+%\usepackage[style=chem-acs, backend=bibtex]{biblatex}
+%\usepackage[style=phys, backend=bibtex]{biblatex}
+%\usepackage[style=mla, backend=bibtex]{biblatex}
+%\usepackage[style=apa, backend=bibtex]{biblatex}
+%\usepackage[style=chicago-authordate, backend=bibtex]{biblatex}
+\usepackage[style=science, backend=bibtex]{biblatex}
+%\usepackage[style=apa, backend=bibtex]{biblatex}
+
+
+
+\addbibresource{references.bib}
+\bibliography{References}
+
+
+\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+
+
+%\setbeamertemplate{itemize items}[default]
+%\setbeamertemplate{enumerate items}[default]
+
+\setbeamertemplate{itemize items}{\bluesquare}
+\setbeamertemplate{itemize subitem}{\redsquare}
+\setbeamertemplate{itemize subsubitem}{\bluesquare}
+%\setbeamertemplate{enumerate items}{\bluesquare}
+
+
+
+\newcommand{\ba}{  \boldsymbol{a} }
+\newcommand{\bb}{  \boldsymbol{b} }
+\newcommand{\bc}{  \boldsymbol{c} }
+\newcommand{\bd}{  \boldsymbol{d} }
+\newcommand{\be}{  \boldsymbol{e} }
+\newcommand{\bbf}{  \boldsymbol{f} }
+\newcommand{\bg}{  \boldsymbol{g} }
+\newcommand{\bh}{  \boldsymbol{h} }
+\newcommand{\bi}{  \boldsymbol{i} }
+\newcommand{\bj}{  \boldsymbol{j} }
+\newcommand{\bk}{  \boldsymbol{k} }
+\newcommand{\bl}{  \boldsymbol{l} }
+\newcommand{\boldm}{  \boldsymbol{m} }
+\newcommand{\bn}{  \boldsymbol{n} }
+\newcommand{\bo}{  \boldsymbol{o} }
+\newcommand{\bp}{  \boldsymbol{p} }
+\newcommand{\bq}{  \boldsymbol{q} }
+\newcommand{\br}{  \boldsymbol{r} }
+\newcommand{\bs}{  \boldsymbol{s} }
+\newcommand{\bt}{  \boldsymbol{t} }
+\newcommand{\bu}{  \boldsymbol{u} }
+\newcommand{\bv}{  \boldsymbol{v} }
+\newcommand{\bw}{  \boldsymbol{w} }
+\newcommand{\bx}{  \boldsymbol{x} }
+\newcommand{\by}{  \boldsymbol{y} }
+\newcommand{\bz}{  \boldsymbol{z} }
+
+\newcommand{\bA}{  \boldsymbol{A} }
+\newcommand{\bB}{  \boldsymbol{B} }
+\newcommand{\bC}{  \boldsymbol{C} }
+\newcommand{\bD}{  \boldsymbol{D} }
+\newcommand{\bE}{  \boldsymbol{E} }
+\newcommand{\bF}{  \boldsymbol{F} }
+\newcommand{\bG}{  \boldsymbol{G} }
+\newcommand{\bH}{  \boldsymbol{H} }
+\newcommand{\bI}{  \boldsymbol{I} }
+\newcommand{\bJ}{  \boldsymbol{J} }
+\newcommand{\bK}{  \boldsymbol{K} }
+\newcommand{\bL}{  \boldsymbol{L} }
+\newcommand{\bM}{  \boldsymbol{M} }
+\newcommand{\bN}{  \boldsymbol{N} }
+\newcommand{\bO}{  \boldsymbol{O} }
+\newcommand{\bP}{  \boldsymbol{P} }
+\newcommand{\bQ}{  \boldsymbol{Q} }
+\newcommand{\bR}{  \boldsymbol{R} }
+\newcommand{\bS}{  \boldsymbol{S} }
+\newcommand{\bT}{  \boldsymbol{T} }
+\newcommand{\bU}{  \boldsymbol{U} }
+\newcommand{\bV}{  \boldsymbol{V} }
+\newcommand{\bW}{  \boldsymbol{W} }
+\newcommand{\bX}{  \boldsymbol{X} }
+\newcommand{\bY}{  \boldsymbol{Y} }
+\newcommand{\bZ}{  \boldsymbol{Z} }
+
+\newcommand{\balpha}{  \boldsymbol{\alpha} }
+\newcommand{\bbeta}{  \boldsymbol{\beta} }
+\newcommand{\bgamma}{  \boldsymbol{\gamma} }
+\newcommand{\bdelta}{  \boldsymbol{\delta} }
+\newcommand{\bepsilon}{  \boldsymbol{\epsilon} }
+\newcommand{\bzeta}{  \boldsymbol{\zeta} }
+\newcommand{\boldeta}{  \boldsymbol{\eta} }
+\newcommand{\btheta}{  \boldsymbol{\theta} }
+\newcommand{\biota}{  \boldsymbol{\iota} }
+\newcommand{\bkappa}{  \boldsymbol{\kappa} }
+\newcommand{\blambda}{  \boldsymbol{\lambda} }
+\newcommand{\bmu}{  \boldsymbol{\mu} }
+\newcommand{\bnu}{  \boldsymbol{\nu} }
+\newcommand{\bxi}{  \boldsymbol{\xi} }
+\newcommand{\bomicron}{  \boldsymbol{\omicron} }
+\newcommand{\bpi}{  \boldsymbol{\pi} }
+\newcommand{\brho}{  \boldsymbol{\rho} }
+\newcommand{\bsigma}{  \boldsymbol{\sigma} }
+\newcommand{\btau}{  \boldsymbol{\tau} }
+\newcommand{\bupsilon}{  \boldsymbol{\upsilon} }
+\newcommand{\bphi}{  \boldsymbol{\phi} }
+\newcommand{\bchi}{  \boldsymbol{\chi} }
+\newcommand{\bpsi}{  \boldsymbol{\psi} }
+\newcommand{\bomega}{  \boldsymbol{\omega} }
+\newcommand{\bAlpha}{  \boldsymbol{\Alpha} }
+\newcommand{\bBeta}{  \boldsymbol{\Beta} }
+\newcommand{\bGamma}{  \boldsymbol{\Gamma} }
+\newcommand{\bDelta}{  \boldsymbol{\Delta} }
+\newcommand{\bEpsilon}{  \boldsymbol{\Epsilon} }
+\newcommand{\bZeta}{  \boldsymbol{\Zeta} }
+\newcommand{\bEta}{  \boldsymbol{\Eta} }
+\newcommand{\bTheta}{  \boldsymbol{\Theta} }
+\newcommand{\bIota}{  \boldsymbol{\Iota} }
+\newcommand{\bKappa}{  \boldsymbol{\Kappa} }
+\newcommand{\bLambda}{  \boldsymbol{\Lambda} }
+\newcommand{\bMu}{  \boldsymbol{\Mu} }
+\newcommand{\bNu}{  \boldsymbol{\Nu} }
+\newcommand{\bXi}{  \boldsymbol{\Xi} }
+\newcommand{\bOmicron}{  \boldsymbol{\Omicron} }
+\newcommand{\bPi}{  \boldsymbol{\Pi} }
+\newcommand{\bRho}{  \boldsymbol{\Rho} }
+\newcommand{\bSigma}{  \boldsymbol{\Sigma} }
+\newcommand{\bTau}{  \boldsymbol{\Tau} }
+\newcommand{\bUpsilon}{  \boldsymbol{\Upsilon} }
+\newcommand{\bPhi}{  \boldsymbol{\Phi} }
+\newcommand{\bChi}{  \boldsymbol{\Chi} }
+\newcommand{\bPsi}{  \boldsymbol{\Psi} }
+\newcommand{\bOmega}{  \boldsymbol{\Omega} }
+\newcommand{\bzero}{\mbox{\boldmath {$0$}}}
+\newcommand{\bone}{\mbox{\boldmath {$1$}}}
+
+\newcommand{\A}{ \mathcal{A} }
+\newcommand{\E}{ \mathbb{E} }
+%\newcommand{\L}{ \mathcal{L} }
+\newcommand{\R}{ \mathbb{R} }
+\newcommand{\N}{ \mathcal{N} }
+\newcommand{\I}{ \mathbb{I} }
+
+\newcommand{\diag}{ \text{diag} }
+\newcommand{\tr}{ \text{tr} }
+
+\newcommand\Underset[2]{\underset{\textstyle #1}{#2}}
+
+
+
+
+
+\setbeamerfont{footnote}{size=\tiny}
+\addtobeamertemplate{footnote}{\hskip -2em}{}
+\newcommand\Footnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{$\aleph$}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+
+\beamertemplatenavigationsymbolsempty
+
+
+\addtobeamertemplate{navigation symbols}{}{ \hspace{1em}    \usebeamerfont{footline}%
+	\insertframenumber / \inserttotalframenumber }
+
+
+
+
+
+
+
+
+
+
+
+\begin{document}
+	\setlength{\leftmargini}{0pt}
+	
+	\author[Kipoong Kim]{Kipoong Kim} %\inst{1}}
+	
+	%\institute[Fluid Mechanics]{
+	%	$^1$ Department of Statistics at Seoul National University\\
+	%}
+	
+	\title[Cross]{
+		Overview
+	}
+	
+	%\subtitle{}
+	%\logo{}
+	%\institute{}
+	\date[PostDoc-Intro]{March 2022}
+	%\subject{}
+	%\setbeamercovered{transparent}
+	%\setbeamertemplate{navigation symbols}{}
+	\begin{frame}[plain]
+		\maketitle
+	\end{frame}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	\begin{frame}
+		\begin{beamercolorbox}[center]{title}
+			{\huge Introduction}
+		\end{beamercolorbox}
+	\end{frame}
+
+
+
+
+	
+	
+	\begin{frame}
+		\frametitle{asdf}
+		\begin{itemize}
+			\setlength\itemsep{.3cm}
+			\item asdf
+		\end{itemize}
+	\end{frame}
+
+
+\end{document}
