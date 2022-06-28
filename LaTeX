@@ -67,6 +67,7 @@
 \usepackage{amssymb} % for \therefore
 \usepackage{bm} % for bold text
 
+
 \newcommand{\ba}{  \pmb{a} }
 \newcommand{\bb}{  \pmb{b} }
 \newcommand{\bc}{  \pmb{c} }
@@ -172,11 +173,20 @@
 \newcommand{\bzero}{\mbox{\pmb {$0$}}}
 \newcommand{\bone}{\mbox{\pmb {$1$}}}
 
+\newcommand{\tbbeta}{  \tilde{\pmb{\beta}} }
+
+
+
+
 \newcommand{\A}{ \mathcal{A} }
 \newcommand{\E}{ \mathbb{E} }
 %\newcommand{\L}{ \mathcal{L} }
 \newcommand{\R}{ \mathbb{R} }
 \newcommand{\N}{ \mathcal{N} }
+\newcommand{\Q}{ \mathcal{Q} }
+\newcommand{\F}{ \mathcal{F} }
+\newcommand{\C}{ \mathcal{C} }
+\newcommand{\G}{ \mathcal{G} }
 \newcommand{\I}{ \mathbb{I} }
 
 
@@ -190,6 +200,13 @@
 \newcommand{\sign}{ \text{sign} }
 \newcommand{\vectorize}{ \text{vec} }
 
+\newcommand\bIover[1]{ {\mathbf{I}^{(#1)}} }
+
+\newcommand\argmin[1]{\underset{#1}{\arg \min}~ }
+\newcommand\argmax[1]{\underset{#1}{\arg \max}~ }
+
 \newcommand\undersetbig[2]{\underset{\textstyle #1}{#2}}
+\newcommand\sumsum[1]{ \underset{#1}{\sum\sum} }
+
 
 %%%%%%%%%
