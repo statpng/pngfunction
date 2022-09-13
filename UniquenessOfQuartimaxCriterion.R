@@ -1,4 +1,4 @@
-png.quartimax <- function(X){
+png.quartimax <- function(X, lr=0.1, eps=1e-10){
   
   Q <- diag(ncol(X))
   p <- nrow(X)
@@ -9,15 +9,17 @@ png.quartimax <- function(X){
   while(TRUE){
     Qold <- Q
     
-    Q <- with( svd( Q + 0.1*G ), tcrossprod(u, v) )
+    Q <- with( svd( Q + lr*G ), tcrossprod(u, v) )
     
     Z <- X %*% Q
     dQ <- - Z^3
     # dQ <- 1/p * (Z^3 - Z %*% diag(drop(rep(1, p) %*% Z^2))/p)
     G <- crossprod(X, dQ)
     
-    if( norm(Q - Qold, "F") < 1e-11 ) break
+    if( norm(Q - Qold, "F") < eps ) break
   }
+  
+  print(norm(Q - Qold, "F"))
   list(loadings = X %*% Q, rotation = Q)
 }
 
@@ -28,20 +30,19 @@ A = with( svd(matrix(rnorm(20*5),10,5)), tcrossprod(u,v) );
 crossprod(A)
 
 out = NULL; 
-for( i in 1:10 ){ 
+for( i in 1:1000 ){ 
 	Q = with( svd(matrix(rnorm(5*5),5,5)), tcrossprod(u,v) );  
 	out[[i]] = A %*% Q
 }
 
+out2 = lapply(out[1:100], function(L) png.quartimax(L)$load )
+out2 = lapply(out[1:100], function(L) GPArotation::quartimax(L, maxit=100000, eps=5e-7)$load )
 
-GPArotation::quartimax( A %*% Q )$Th
-png.quartimax( A %*% Q )$rot
-
-out[1:5]
-
-lapply(out[1:5], function(L) png.quartimax(L)$load )
-lapply(out[1:5], function(L) GPArotation::quartimax(L, maxit=100000, eps=5e-7)$load )
-
-A=matrix(rnorm(6*3),6,3); out=NULL; for(i in 1:100) out[[i]] = GPArotation::Varimax( A %*% with( svd(matrix(rnorm(9),3,3)), tcrossprod(u,v) ))$load
+print( lapply(out[97:98], function(L) png.quartimax(L,lr=0.9,eps=1e-15)$load ) )
 
 
+out3 = lapply(out2, function(x) x[,order(apply(x, 2, function(y) abs(y[1])))] )
+
+out4 = sapply(out3, function(x) abs(x[1,1]) )
+
+diff(out4)
