@@ -44,8 +44,9 @@ for( j in 1:100 ){
 	# out2 = lapply(out[1:100], function(L) png.quartimax(L)$load )
 	out2 = lapply(out[1:100], function(L) GPArotation::quartimax(L, maxit=1000, eps=1e-3)$load )
 	out3 = lapply(out2, function(x) x[,order(apply(x, 2, function(y) abs(y[1])))] )
+	# sapply(out3, function(x) sum(x^4))
 	out4 = sapply(out3, function(x) abs(x[1,1]) )
-	out_total[j] = mean( diff(out4) < 1e-4 ) 
+	out_total[j] = mean( diff(out4) < 1e-2 ) 
 	print(out_total[j])
 }
 
