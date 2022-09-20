@@ -25,24 +25,25 @@ png.quartimax <- function(X, lr=0.1, eps=1e-10){
 
 
 
-A = with( svd(matrix(rnorm(20*5),10,5)), tcrossprod(u,v) );  
 
-crossprod(A)
 
-out = NULL; 
-for( i in 1:1000 ){ 
-	Q = with( svd(matrix(rnorm(5*5),5,5)), tcrossprod(u,v) );  
-	out[[i]] = A %*% Q
+
+out_total = NULL
+for( j in 1:100 ){
+	A = matrix(rnorm(10*5),10,5)
+	# A = with( svd(matrix(rnorm(20*5),10,5)), tcrossprod(u,v) );  
+
+	out = NULL; 
+	for( i in 1:100 ){ 
+		Q = with( svd(matrix(rnorm(5*5),5,5)), tcrossprod(u,v) );  
+		out[[i]] = A %*% Q
+	}
+
+	# out2 = lapply(out[1:100], function(L) png.quartimax(L)$load )
+	out2 = lapply(out[1:5], function(L) GPArotation::quartimax(L, maxit=1000, eps=1e-5)$load )
+	out3 = lapply(out2, function(x) x[,order(apply(x, 2, function(y) abs(y[1])))] )
+	out4 = sapply(out3, function(x) abs(x[1,1]) )
+	out_total[j] = mean( diff(out4) < 1e-4 ) 
+	print(out_total[j])
 }
 
-out2 = lapply(out[1:100], function(L) png.quartimax(L)$load )
-out2 = lapply(out[1:100], function(L) GPArotation::quartimax(L, maxit=100000, eps=5e-7)$load )
-
-print( lapply(out[97:98], function(L) png.quartimax(L,lr=0.9,eps=1e-15)$load ) )
-
-
-out3 = lapply(out2, function(x) x[,order(apply(x, 2, function(y) abs(y[1])))] )
-
-out4 = sapply(out3, function(x) abs(x[1,1]) )
-
-diff(out4)
