@@ -45,7 +45,7 @@ png.BetaDiversity <- function(mat, type="braycurtis"){
 }
 
 
-
+if(FALSE){
 ## Validation
 # BiocManager::install("microbiome")
 library(microbiome)
@@ -69,3 +69,4 @@ Beta <- png.BetaDiversity(abundances(pseq))
 ## PCoA
 fit.pcoa <- ape::pcoa(Beta)
 plot( fit.pcoa$vectors[,1:2], pch=18 )
+}
