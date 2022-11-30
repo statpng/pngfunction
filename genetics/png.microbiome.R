@@ -1,3 +1,15 @@
+png.RelativeAbundance <- function(mat){
+  # mat: p x n
+  n <- ncol(mat)
+  for( i in 1:n ){
+    mat[,i] <- mat[,i]/sum(mat[,i])
+  }
+  mat
+}
+
+
+
+
 # vec <- pseq@otu_table@.Data[,1]
 AlphaDiversity <- function(vec){
   vec <- vec[vec>0]
@@ -20,6 +32,10 @@ png.AlphaDiversity <- function(mat){
 BetaDiversity <- function(x1, x2){
   wh1 <- which(x1>0)
   wh2 <- which(x2>0)
+  
+  if( sum(x1) + sum(x2) == 0 ){
+    return( list( jaccard=0, braycurtis=0 ) )
+  }
   
   Jaccard = 1 - length(intersect(wh1,wh2))/length(unique(c(wh1,wh2)))
   BrayCurtis = sum(abs(x1-x2))/(sum(x1)+sum(x2))
