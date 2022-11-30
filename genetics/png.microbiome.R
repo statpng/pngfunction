@@ -44,6 +44,12 @@ png.BetaDiversity <- function(mat, type="braycurtis"){
 }
 
 
+png.pcoa <- function(BetaDiversityMatrix){
+  fit.pcoa <- ape::pcoa(BetaDiversityMatrix)
+  fit.pcoa$vectors[,1:2]
+}
+
+
 if(FALSE){
   ## Validation
   # BiocManager::install("microbiome")
