@@ -1,4 +1,3 @@
-
 # vec <- pseq@otu_table@.Data[,1]
 AlphaDiversity <- function(vec){
   vec <- vec[vec>0]
@@ -13,7 +12,7 @@ AlphaDiversity <- function(vec){
 
 png.AlphaDiversity <- function(mat){
   n <- ncol(mat)
-  sapply(1:n, function(j) AlphaDiversity(abundances(pseq)[,j])) %>% t
+  sapply(1:n, function(j) AlphaDiversity(mat[,j])) %>% t
 }
 
 # x1 <- pseq@otu_table@.Data[,1]
@@ -46,27 +45,27 @@ png.BetaDiversity <- function(mat, type="braycurtis"){
 
 
 if(FALSE){
-## Validation
-# BiocManager::install("microbiome")
-library(microbiome)
-data(dietswap)
-pseq <- dietswap
-
-# Package
-microbiome::alpha(pseq, index = c("diversity_shannon","evenness_pielou"))[1:10,]
-mapply(function(u,v) abundances(pseq) %>% {microbiome::divergence(.[,u], .[,v])}, u=1:4, v=2:5)
-
-# My Function
-sapply(1:10, function(j) AlphaDiversity(abundances(pseq)[,j])) %>% t
-mapply(function(u,v) abundances(pseq) %>% {BetaDiversity(.[,u], .[,v])}, u=1:4, v=2:5)
-
-
-
-## Matrix form
-Alpha <- png.AlphaDiversity(abundances(pseq))
-Beta <- png.BetaDiversity(abundances(pseq))
-
-## PCoA
-fit.pcoa <- ape::pcoa(Beta)
-plot( fit.pcoa$vectors[,1:2], pch=18 )
+  ## Validation
+  # BiocManager::install("microbiome")
+  library(microbiome)
+  data(dietswap)
+  pseq <- dietswap
+  
+  # Package
+  microbiome::alpha(pseq, index = c("diversity_shannon","evenness_pielou"))[1:10,]
+  mapply(function(u,v) abundances(pseq) %>% {microbiome::divergence(.[,u], .[,v])}, u=1:4, v=2:5)
+  
+  # My Function
+  sapply(1:10, function(j) AlphaDiversity(abundances(pseq)[,j])) %>% t
+  mapply(function(u,v) abundances(pseq) %>% {BetaDiversity(.[,u], .[,v])}, u=1:4, v=2:5)
+  
+  
+  
+  ## Matrix form
+  Alpha <- png.AlphaDiversity(abundances(pseq))
+  Beta <- png.BetaDiversity(abundances(pseq))
+  
+  ## PCoA
+  fit.pcoa <- ape::pcoa(Beta)
+  plot( fit.pcoa$vectors[,1:2], pch=18 )
 }
