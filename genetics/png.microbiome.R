@@ -49,6 +49,7 @@ png.BetaDiversity <- function(mat, type="braycurtis"){
   
   BetaDivMat <- matrix(0,n,n)
   for(u in 1:(n-1)){
+    sprintf("%d / %d", u, n)
     for(v in (u+1):n){
       BetaDivMat[u,v] <- BetaDiversity(mat[,u], mat[,v])[[type]]
     }
