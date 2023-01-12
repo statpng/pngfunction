@@ -1,11 +1,7 @@
-flag_mean <- function(X.list, nrank=NULL, type=c("svd","eigen")){
+flag_mean <- function(X.list, nrank=NULL, type="svd"){
   
-  # X.list <- data[[1]] %>% { lapply( 1:4, function(idx) .$X[,which(.$pvec==idx)] ) }
-  
-  X.list.orth <- lapply(X.list, function(x) qr.Q(qr(x)))
-  # X.list.orth <- lapply(X.list, function(X) svd(X)$u)
-  
-  X.orth <- do.call("cbind", X.list.orth)
+  # X.list.orth <- lapply(X.list, function(x) qr.Q(qr(x)))
+  X.list.orth <- lapply(X.list, function(X) svd(X)$u)
   
   if( type == "eigen" ){
     A <- Reduce("+", lapply( X.list.orth, function(x) tcrossprod( x ) ))
@@ -13,7 +9,9 @@ flag_mean <- function(X.list, nrank=NULL, type=c("svd","eigen")){
     eigen.A <- eigen(A)
     U <- eigen.A$vectors
     L <- eigen.A$values
-  } else {
+  }
+  if( type == "svd" ){
+    X.orth <- do.call("cbind", X.list.orth)
     U <- svd(X.orth)$u
   }
   
