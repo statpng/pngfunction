@@ -4,7 +4,7 @@ flag_mean <- function(X.list, type="svd"){
     sum( svd(x)$d > 1e-15 )
   }
   
-  X.list.orth <- lapply(X.list, function(X) svd(X)$u[,1:rank(X)])
+  X.list.orth <- lapply(X.list, function(x) svd(x)$u[,1:rank(x)])
   # X.list.orth <- lapply(X.list, function(x) qr.Q(qr(x))[,1:rank(X))
   
   if( type == "eigen" ){
