@@ -4,7 +4,7 @@
 
 
 
-
+```
 $ awk '{print}' employee.txt
 >
 ajay manager account 45000
@@ -15,7 +15,7 @@ tarun peon sales 15000
 deepak clerk sales 23000
 sunil peon sales 13000
 satvik director purchase 80000 
-
+```
 
 $ awk '/manager/ {print}' employee.txt 
 >
