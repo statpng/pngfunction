@@ -71,6 +71,6 @@ amit 47000
 
 ## Manipulate column
 
-``` sed 's/_[A-Z].* / /g' file ```
+``` sed 's/before/after/g' file ```
 
 
