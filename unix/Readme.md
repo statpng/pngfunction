@@ -56,3 +56,12 @@ ajay 45000
 varun 50000
 amit 47000
 ```
+
+
+
+
+
+
+## The number of columns
+
+head -1 ./data/merge0422_ped-map.ped | tr ' ' '\n' | wc -l
