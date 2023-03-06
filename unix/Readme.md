@@ -64,4 +64,13 @@ amit 47000
 
 ## The number of columns
 
-head -1 ./data/merge0422_ped-map.ped | tr ' ' '\n' | wc -l
+``` head -1 ./data/merge0422_ped-map.ped | tr ' ' '\n' | wc -l ```
+
+
+
+
+## Manipulate column
+
+``` sed 's/_[A-Z].* / /g' file ```
+
+
