@@ -65,7 +65,7 @@ amit 47000
 ## The number of columns
 
 ``` head -1 ./data/merge0422_ped-map.ped | tr ' ' '\n' | wc -l ```
-
+``` awk '{print NF}' file.ped | head -n 1 ```
 
 
 
