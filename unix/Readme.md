@@ -78,3 +78,17 @@ amit 47000
 ## The number of rows in a file called aaa.bim where the first column contains the value "21":
 
 ``` awk -F' ' '$1=="21"{count++} END{print count}' /Users/png/Downloads/aaa.bim ```
+
+
+
+## The number of SNPs over CHR = 1, 2, ..., 22:
+```
+SUM=0
+for i in {1..22..1}
+do
+    nSNP_CHR=$(wc -l "~/CHR"$i".bim" | awk '{print $1}')
+    SUM=$(($SUM + $nSNP_CHR))
+done
+
+echo $SUM
+```
