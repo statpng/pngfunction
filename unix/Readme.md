@@ -74,3 +74,7 @@ amit 47000
 ``` sed 's/before/after/g' file ```
 
 
+
+## The number of rows in a file called aaa.bim where the first column contains the value "21":
+
+``` awk -F' ' '$1=="21"{count++} END{print count}' /Users/png/Downloads/aaa.bim ```
