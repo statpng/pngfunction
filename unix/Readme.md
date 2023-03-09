@@ -66,8 +66,7 @@ amit 47000
 
 ``` head -1 ./data/merge0422_ped-map.ped | tr ' ' '\n' | wc -l ```
 
-``` awk '{print NF}' file.ped | head -n 1 ```
-
+``` head -n 1 file.ped | awk '{print NF}' ```
 
 
 ## Manipulate column
