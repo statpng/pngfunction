@@ -45,3 +45,9 @@ c.NotebookApp.open_browser = False
 jupyter notebook --ip=164.125.33.81 --port=8888 --no-browser
 sudo jupyter notebook --allow-root --ip=164.125.33.81 --port=8888 --no-browser
 
+
+## Generating a password
+
+python running  (3.x)
+>> from notebook.auth import passwd
+>> passwd()
