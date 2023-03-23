@@ -71,7 +71,7 @@ png.mesh3d <- function(df){
 png.plotly3d <- function(df, ...){
   library(plotly)  
   colnames(df) <- c("x", "y", "z")
-  plot_ly(x=~x, y=~y, z=~z, type = 'scatter3d', data=df %>% as.data.frame())  
+  plot_ly(x=~x, y=~y, z=~z, type = 'scatter3d', data=df %>% as.data.frame(), ...)  
 }
 
 
