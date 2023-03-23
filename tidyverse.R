@@ -51,3 +51,28 @@ png.plot3d <- function(df, theta=135, phi=60, alpha=0.1){
     scale_y_reverse()
   
 }
+
+
+
+
+
+png.mesh <- function(df){
+  # devtools::install_github("stla/SurfaceReconstruction")
+  mesh <- SurfaceReconstruction::AFSreconstruction(df[,1:3] %>% as.matrix)
+  mesh
+}
+png.mesh3d <- function(df){
+  library(SurfaceReconstruction)
+  library(rgl)
+  mesh <- SurfaceReconstruction::AFSreconstruction(df[,1:3] %>% as.matrix)
+  open3d()
+  wire3d(mesh, color = "grey90")
+}
+png.plotly3d <- function(df){
+  library(plotly)  
+  colnames(df) <- c("x", "y", "z")
+  plot_ly(x=~x, y=~y, z=~z, type = 'scatter3d', data=df %>% as.data.frame())  
+}
+
+
+# devtools::install_github("zarquon42b/Morpho")
