@@ -25,6 +25,7 @@ png.plot3d <- function(df, theta=135, phi=60, alpha=0.1){
   # df: x, y, z cooridnates
   # library(plot3D)
   # library(ggplot2)
+  colnames(df) <- c("x", "y", "z")
   
   trans_3d_2d <- function(data, theta=135, phi=60) {
     pmat <- plot3D::perspbox(z=diag(2), plot=F, theta=theta, phi=phi)
