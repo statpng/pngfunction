@@ -9,6 +9,11 @@ png.data.nose <- function(){
   list(mesh=mesh, landmark=landmark)
 }
 
+png.mesh3d <- function(df){
+  # devtools::install_github("stla/SurfaceReconstruction")
+  mesh <- SurfaceReconstruction::AFSreconstruction(df[,1:3] %>% as.matrix)
+  mesh
+}
 
 png.mesh3d.plot <- function(mesh, landmark = NULL, radius = 0.1) {
   library(SurfaceReconstruction)
