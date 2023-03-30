@@ -1,3 +1,4 @@
+# Undeveloped
 flag_mean <- function(X.list, type="svd"){
   
   rank <- function(x){
