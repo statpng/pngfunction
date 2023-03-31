@@ -265,3 +265,74 @@ png.compare_icp <- function(mesh.org, mesh.target, landmark.org, landmark.target
 
 
 
+
+                     
+png.cuvia <- function(path, nlevel=1, start=4){
+  # start <- 4
+  
+  for( i in 1:nlevel ){
+    if( i > 1 ){
+      start <- out$edge_end
+    }
+    names(start) <- NULL
+    rows <- read.csv(path, skip=start, nrows=1, sep=" ", header = FALSE) %>% as.numeric
+    
+    node_start <- start+2
+    node_end <- start+rows[1]+1
+    edge_start <- start+rows[1]+2
+    edge_end <- start+rows[1]+rows[2]+1
+    out <- list(edge_start=edge_start, 
+             edge_end=edge_end, 
+             node_start=node_start, 
+             node_end=node_end)
+    
+  }
+  
+  df_edge <- read.csv(path, skip=out$edge_start-1, nrows = with(out, edge_end-edge_start+1), header=F, sep=" " )
+  df_node <- read.csv(path, skip=out$node_start-1, nrows = with(out, node_end-node_start+1), header=F, sep=" " )
+  
+  df_edge[,1:3] <- df_edge[,1:3]+1
+  
+  list(edge=as_tibble(df_edge), 
+       node=as_tibble(df_node),
+       row=out)
+}
+
+                     
+                     
+                     
+png.cuvia2mesh <- function(fit.cuvia, type="triangle"){
+  node <- fit.cuvia$node[,1:4]
+  edge <- fit.cuvia$edge[,1:3]
+  
+  data.table::setnames(node, c("x", "y", "z", "value"))
+  data.table::setnames(edge, c("x", "y", "z"))
+  
+  if(type == "triangle"){
+    mesh <- rgl::tmesh3d(vertices = t(node[,1:3]), indices = t(edge))
+  } else {
+    mesh <- rgl::mesh3d(vertices = t(node[,1:3]), quads = t(edge))
+  }
+  
+  mesh$value <- as.matrix(node[,4])
+  
+  mesh
+  
+}
+
+                     
+                     
+                     
+                     
+png.cuvia2stl <- function(path){
+  library(dplyr)
+  path %>% 
+    png.cuvia( nlevel=1 ) %>% 
+    png.cuvia2mesh() %>% 
+    Rvcg::vcgStlWrite(filename= paste0( "cuv2stl_", strsplit(path,"/")[[1]] %>% {.[length(.)]} %>% gsub(".cuv", "", .) ) )
+}
+
+                     
+                     
+                     
+                     
