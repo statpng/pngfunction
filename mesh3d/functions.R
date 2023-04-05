@@ -329,7 +329,7 @@ png.cuvia2stl <- function(path, level=1){
   path %>% 
     png.cuvia( level=level ) %>% 
     png.cuvia2mesh() %>% 
-    Rvcg::vcgStlWrite(filename= paste0( "cuv2stl_", strsplit(path,"/")[[1]] %>% {.[length(.)]} %>% gsub(".cuv", "", .) ) )
+    Rvcg::vcgStlWrite(filename= paste0( "cuv2stl_lev", level, "_", strsplit(path,"/")[[1]] %>% {.[length(.)]} %>% gsub(".cuv", "", .) ) )
 }
 
                      
