@@ -267,10 +267,10 @@ png.compare_icp <- function(mesh.org, mesh.target, landmark.org, landmark.target
 
 
                      
-png.cuvia <- function(path, nlevel=1, start=4){
+png.cuvia <- function(path, level=1, start=4){
   # start <- 4
   
-  for( i in 1:nlevel ){
+  for( i in 1:level ){
     if( i > 1 ){
       start <- out$edge_end
     }
@@ -324,10 +324,10 @@ png.cuvia2mesh <- function(fit.cuvia, type="triangle"){
                      
                      
                      
-png.cuvia2stl <- function(path){
+png.cuvia2stl <- function(path, level=1){
   library(dplyr)
   path %>% 
-    png.cuvia( nlevel=1 ) %>% 
+    png.cuvia( level=level ) %>% 
     png.cuvia2mesh() %>% 
     Rvcg::vcgStlWrite(filename= paste0( "cuv2stl_", strsplit(path,"/")[[1]] %>% {.[length(.)]} %>% gsub(".cuv", "", .) ) )
 }
