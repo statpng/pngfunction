@@ -5,6 +5,22 @@
       paste0(x, y)
 }
 
+png.coord2mesh <- function(nodes, edges, value, type="triangle"){
+  
+  data.table::setnames(nodes, c("x", "y", "z"))
+  data.table::setnames(edges, c("x", "y", "z"))
+  
+  if(type == "triangle"){
+    mesh <- rgl::tmesh3d(vertices = t(nodes[,1:3]), indices = t(edges))
+  } else {
+    mesh <- rgl::mesh3d(vertices = t(nodes[,1:3]), quads = t(edges))
+  }
+  
+  mesh$value <- as.matrix(value)
+  
+  mesh
+  
+}
 
 png.data.nose <- function(){
   library(Morpho)
