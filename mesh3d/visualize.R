@@ -1,3 +1,26 @@
+png.mesh3d.plot <- function(mesh, type="wire", landmark = NULL, radius = 0.1) {
+  library(SurfaceReconstruction)
+  library(rgl)
+  
+  if (!inherits(mesh, "mesh3d")) {
+    mesh <- SurfaceReconstruction::AFSreconstruction(as.matrix(mesh[, 1:3]))
+  }
+  
+  open3d()
+  if( type == "shade" ){
+    shade3d(mesh, color = "grey70")
+  } else if( type == "wire" ){
+    wire3d(mesh, color = "grey70")
+  }
+  
+  
+  if (!is.null(landmark)) {
+    spheres3d(landmark, col = "red", radius = radius)
+  }
+  
+}
+
+
 
 # Inverse Distance Weighting
 interpolate_data_IDW <- function(person1_data, person2_data, value_column, grid_resolution = 100) {
