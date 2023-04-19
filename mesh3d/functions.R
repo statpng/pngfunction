@@ -13,9 +13,10 @@ png.flat.clean <- function(df){
   x <- nodes[,1]
   y <- nodes[,2]
   z <- 0 # nodes[,3]
-  outliers <- which(x^2 + y^2 + z^2 > 0.5^2)
+  outliers <- which(x^2 + y^2 + z^2 > 0.5^2+1e-4)
   # nonoutliers <- (1:nrow(nodes))[-outliers]
-  nodes_filtered <- df$nodes[-outliers,]
+  nodes_filtered <- df$nodes
+  nodes_filtered[outliers,] <- NA
   edges_filtered <- edges %>% filter_all( all_vars(!. %in% outliers) )
   
   edges %>% dim %>% print
@@ -23,6 +24,7 @@ png.flat.clean <- function(df){
   
   list(nodes=nodes_filtered, edges=edges_filtered)
 }
+
 
 
 
