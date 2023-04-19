@@ -5,6 +5,14 @@
       paste0(x, y)
 }
 
+png.plt2stl <- function(path){
+  # path <- "/Volumes/T7/1.Mesh3d/temp1/voltmap.plt/"
+  ListFiles <- list.files(path, "plt", full.names = TRUE)
+  FileNames <- gsub(".plt", "", map_chr(ListFiles, ~strsplit(.x, "/")[[1]] %>% {.[length(.)]}))
+  MESH <- png.read_plts( ListFiles, nmax=Inf, center=TRUE )
+  MESH %>% map2( FileNames, ~ Rvcg::vcgStlWrite(.x, filename=paste0(gsub(".plt","",.y)) ) )
+}
+
 png_read.vtk<-function(filename, item = c("points", "triangles", "normals")){
   item=match.arg(item)
   
