@@ -44,12 +44,17 @@ png_read.vtk <- function(filename){
     stop("ReadVTKLandmarks can currently only read POLYDATA.",
          " See http://www.vtk.org/VTK/img/file-formats.pdf for details.")
   
+  
+  
+  
   pointsLine=toupper(readLines(con,1))
   if(regexpr("POINTS",pointsLine)<0)
     stop("Missing POINTS definition line")
   ptinfo=unlist(strsplit(pointsLine,"\\s+",perl=TRUE))
   if(length(ptinfo)!=3)
     stop("Unable to extract points information from POINTS line",pointsLine)
+  
+  
   nummarkers=as.integer(ptinfo[2])
   if(is.na(nummarkers))
     stop("Unable to extract number of points from POINTS line:",pointsLine)
@@ -93,28 +98,25 @@ png_read.vtk <- function(filename){
     stop("Unable to extract number of connections from POLYGONS line:",triangLine)
   datatype=lnDataTypeinfo[2]
   
-  
-  
-  
   triang=scan(con,what=1.0,n=nummconns,quiet=TRUE)
-  
-  m=matrix(triang,ncol=3,byrow=T)
-  attr(m,"file")=filename
-  attr(m,"title")=title
-  attr(m,"vtk_datatype")= "int"
+  triangle_df <- matrix(triang,ncol=3,byrow=T)
+  attr(triangle_df,"file")=filename
+  attr(triangle_df,"title")=title
+  attr(triangle_df,"vtk_datatype")= "int"
   
 
+  
+  
   num_edges=as.integer(lninfo[3])
   toupper(readLines(con,1))
   edges = scan(con,what=1.0,n=num_edges,quiet=TRUE)
   
-  nodes_df <- matrix(points, ncol=3, byrow=TRUE)
-  edges_df <- matrix(edges, ncol=3, byrow=TRUE)
-  
+  nodes_df <- matrix(points, ncol=3, byrow=TRUE) %>% as.data.frame
+  edges_df <- matrix(edges, ncol=3, byrow=TRUE) %>% as.data.frame
+  colnames(nodes_df) <- colnames(edges_df) <- letters[24:26]
   
   list(nodes=nodes_df, edges=edges_df)
 }
-
 
 
 
