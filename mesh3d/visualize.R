@@ -62,10 +62,10 @@ interpolate_data_KNN <- function(person1_data, person2_data, value_column, k = 5
 
 
 
-png_disc_plot <- function(df, col_name = "LAT"){
+png_disk_plot <- function(df, col_name = "LAT"){
   
   library(ggplot2)
-  data.frame(x=df$x, y=df$y, value=df$value) %>% 
+  data.frame(x=df$x, y=df$y, value=df[col_name]) %>% 
     ggplot() +
     geom_point(aes(x,y,col=value), size=1) +
     # scale_color_gradient2(low="red", high="blue", mid="yellow", na.value="grey90",
