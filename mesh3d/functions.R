@@ -1,6 +1,10 @@
 # functions
 
 # devtools::install_github("zarquon42b/Morpho")
+`%_%` <- function(x, y) {
+      paste0(x, y)
+}
+
 
 png.data.nose <- function(){
   library(Morpho)
