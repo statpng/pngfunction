@@ -6,7 +6,8 @@
 }
 
 
-png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), method="KNN"){
+
+png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), method="KNN", k=2){
   # col_names = c("Voltage", "DF", "LAT", "Smax");  method="KNN"
   
   # df_nodes <- df_flat_cleaned$nodes
@@ -22,7 +23,7 @@ png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT",
     if( method == "KNN" ){
       fit <- interpolate_data_KNN(df_new[-wh.missing,], df_new[-wh.missing,], col)[[1]]
     } else if( method == "IDW" ) {
-      fit <- interpolate_data_IDW(df_new[-wh.missing,], df_new[-wh.missing,], col, k=2)[[1]]
+      fit <- interpolate_data_IDW(df_new[-wh.missing,], df_new[-wh.missing,], col, k=k)[[1]]
     }
     colnames(fit)[3] <- col
     if( i == 1 ){
@@ -39,6 +40,8 @@ png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT",
   
   out_df
 }
+
+
 
 
 png.flat.clean <- function(df){
