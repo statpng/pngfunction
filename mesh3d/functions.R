@@ -13,7 +13,7 @@ png.plt2stl <- function(path){
   MESH %>% map2( FileNames, ~ Rvcg::vcgStlWrite(.x, filename=paste0(gsub(".plt","",.y)) ) )
 }
 
-png_read.vtk<-function(filename, item = c("points", "triangles", "normals")){
+function(filename){
   item=match.arg(item)
   
   if(!file.exists(filename)) stop("Cannot read: ",filename)
@@ -95,29 +95,19 @@ png_read.vtk<-function(filename, item = c("points", "triangles", "normals")){
     attr(m,"title")=title
     attr(m,"vtk_datatype")= "int"
   }
-  # if (item == "normals"){
-  #   normalsLine=toupper(readLines(con,1))
-  #   if(length(normalsLine)==0){
-  #     warning("No data on Normals found")
-  #     return(NULL)
-  #   }
-  #   if(regexpr("NORMALS",normalsLine)<0)
-  #     stop("Missing NORMALS definition line")
-  #   ninfo=unlist(strsplit(normalsLine,"\\s+",perl=TRUE))
-  #   if(length(ninfo)!=3)
-  #     stop("Unable to extract connection information from POLYGONS line",triangLine)
-  #   datatype=ninfo[3]
-  #   if(!datatype%in%toupper(c("unsigned_char", "char", "unsigned_short", "short", "unsigned_int", "int",
-  #                             "unsigned_long", "long", "float", "double")))
-  #     stop("Unrecognised VTK datatype: ",datatype)
-  #   normals=scan(con,what=1.0,n=3*nummarkers,quiet=TRUE)
-  #   m=matrix(normals,ncol=3,byrow=T)
-  #   attr(m,"file")=filename
-  #   attr(m,"title")=title
-  #   attr(m,"vtk_datatype")=datatype
-  # }
-  m
+  
+  num_edges=as.integer(lninfo[3])
+  toupper(readLines(con,1))
+  edges = scan(con,what=1.0,n=num_edges,quiet=TRUE)
+  
+  nodes_df <- matrix(points, ncol=3, byrow=TRUE)
+  edges_df <- matrix(edges, ncol=3, byrow=TRUE)
+  
+  
+  list(nodes=nodes_df, edges=edges_df)
 }
+
+
 
 
 png.coord2mesh <- function(nodes, edges, value=NULL, type="triangle"){
