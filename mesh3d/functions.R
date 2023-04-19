@@ -13,7 +13,7 @@ png.plt2stl <- function(path){
   MESH %>% map2( FileNames, ~ Rvcg::vcgStlWrite(.x, filename=paste0(gsub(".plt","",.y)) ) )
 }
 
-function(filename){
+png_read.vtk <- function(filename){
   item=match.arg(item)
   
   if(!file.exists(filename)) stop("Cannot read: ",filename)
@@ -106,6 +106,7 @@ function(filename){
   
   list(nodes=nodes_df, edges=edges_df)
 }
+
 
 
 
