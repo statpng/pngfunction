@@ -15,7 +15,7 @@ png.plt2stl <- function(path){
 
 
 
-png_read.vtk <- function(filename){
+png_read.vtk <- function(filename, from_python = TRUE){
 
     if(!file.exists(filename)) stop("Cannot read: ",filename)
   con=file(filename,open='rb',encoding='ASCII')
@@ -115,9 +115,12 @@ png_read.vtk <- function(filename){
   edges_df <- matrix(edges, ncol=3, byrow=TRUE) %>% as.data.frame
   colnames(nodes_df) <- colnames(edges_df) <- letters[24:26]
   
+  if( from_python ){
+    edges_df <- edges_df+1
+  }
+  
   list(nodes=nodes_df, edges=edges_df)
 }
-
 
 
 
