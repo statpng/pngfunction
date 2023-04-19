@@ -13,10 +13,11 @@ png.plt2stl <- function(path){
   MESH %>% map2( FileNames, ~ Rvcg::vcgStlWrite(.x, filename=paste0(gsub(".plt","",.y)) ) )
 }
 
+
+
 png_read.vtk <- function(filename){
-  item=match.arg(item)
-  
-  if(!file.exists(filename)) stop("Cannot read: ",filename)
+
+    if(!file.exists(filename)) stop("Cannot read: ",filename)
   con=file(filename,open='rb',encoding='ASCII')
   on.exit(close(con))
   magic=readLines(con,n=1)
@@ -60,42 +61,49 @@ png_read.vtk <- function(filename){
   points=scan(con,what=1.0,n=3*nummarkers,quiet=TRUE)
   
   # VTK seems to be hardcoded for 3D
-  if (item == "points"){
-    m=matrix(points,ncol=3,byrow=T)
-    colnames(m)=c("X","Y","Z")
-    attr(m,"file")=filename
-    attr(m,"title")=title
-    attr(m,"vtk_datatype")=datatype
-  }
-  if (item != "points"){
-    toupper(readLines(con,1))
-    triangLine=toupper(readLines(con,1))
-    if(length(triangLine)==0){
-      warning("No data on polygons found")
-      return(NULL)
-    }
-    if(regexpr("POLYGONS",triangLine)<0)
-      stop("Missing POLYGONS definition line")
-    lninfo=unlist(strsplit(triangLine,"\\s+",perl=TRUE))
-    
-    triangDataTypeLine=toupper(readLines(con,1))
-    lnDataTypeinfo=unlist(strsplit(triangDataTypeLine,"\\s+",perl=TRUE))
-    if(length(lninfo)!=3)
-      stop("Unable to extract connection information from POLYGONS line:",triangLine)
-    
-    nummconns=as.integer(lninfo[2])
-    if(is.na(nummconns))
-      stop("Unable to extract number of connections from POLYGONS line:",triangLine)
-    datatype=lnDataTypeinfo[2]
-    triang=scan(con,what=1.0,n=nummconns,quiet=TRUE)
-  }
-  if (item == "triangles"){
-    m=matrix(triang,ncol=3,byrow=T)
-    attr(m,"file")=filename
-    attr(m,"title")=title
-    attr(m,"vtk_datatype")= "int"
-  }
   
+  
+  m=matrix(points,ncol=3,byrow=T)
+  colnames(m)=c("X","Y","Z")
+  attr(m,"file")=filename
+  attr(m,"title")=title
+  attr(m,"vtk_datatype")=datatype
+  
+  
+  
+  
+  
+  toupper(readLines(con,1))
+  triangLine=toupper(readLines(con,1))
+  if(length(triangLine)==0){
+    warning("No data on polygons found")
+    return(NULL)
+  }
+  if(regexpr("POLYGONS",triangLine)<0)
+    stop("Missing POLYGONS definition line")
+  lninfo=unlist(strsplit(triangLine,"\\s+",perl=TRUE))
+  
+  triangDataTypeLine=toupper(readLines(con,1))
+  lnDataTypeinfo=unlist(strsplit(triangDataTypeLine,"\\s+",perl=TRUE))
+  if(length(lninfo)!=3)
+    stop("Unable to extract connection information from POLYGONS line:",triangLine)
+  
+  nummconns=as.integer(lninfo[2])
+  if(is.na(nummconns))
+    stop("Unable to extract number of connections from POLYGONS line:",triangLine)
+  datatype=lnDataTypeinfo[2]
+  
+  
+  
+  
+  triang=scan(con,what=1.0,n=nummconns,quiet=TRUE)
+  
+  m=matrix(triang,ncol=3,byrow=T)
+  attr(m,"file")=filename
+  attr(m,"title")=title
+  attr(m,"vtk_datatype")= "int"
+  
+
   num_edges=as.integer(lninfo[3])
   toupper(readLines(con,1))
   edges = scan(con,what=1.0,n=num_edges,quiet=TRUE)
@@ -106,6 +114,7 @@ png_read.vtk <- function(filename){
   
   list(nodes=nodes_df, edges=edges_df)
 }
+
 
 
 
