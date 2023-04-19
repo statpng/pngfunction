@@ -126,7 +126,9 @@ png_read.vtk <- function(filename, from_python = TRUE){
 
 
 png.coord2mesh <- function(nodes, edges, value=NULL, type="triangle"){
-  
+  nodes <- nodes[,1:3]
+  edges <- edges[,1:3]
+      
   data.table::setnames(nodes, c("x", "y", "z"))
   data.table::setnames(edges, c("x", "y", "z"))
   
