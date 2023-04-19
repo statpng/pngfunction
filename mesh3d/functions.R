@@ -5,6 +5,26 @@
       paste0(x, y)
 }
 
+
+png.flat.clean <- function(df){
+  # df <- df_flat
+  nodes <- df$nodes[,1:3]
+  edges <- df$edges[,1:3]
+  x <- nodes[,1]
+  y <- nodes[,2]
+  z <- 0 # nodes[,3]
+  outliers <- which(x^2 + y^2 + z^2 > 0.5^2)
+  # nonoutliers <- (1:nrow(nodes))[-outliers]
+  nodes_filtered <- nodes[-outliers,]
+  edges_filtered <- edges %>% filter_all( all_vars(!. %in% outliers) )
+  
+  edges %>% dim %>% print
+  edges_filtered %>% dim %>% print
+  
+  list(nodes=nodes_filtered, edges=edges_filtered)
+}
+
+
 png.plt2stl <- function(path){
   # path <- "/Volumes/T7/1.Mesh3d/temp1/voltmap.plt/"
   ListFiles <- list.files(path, "plt", full.names = TRUE)
