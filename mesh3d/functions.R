@@ -235,22 +235,9 @@ png.mesh3d <- function(df){
   mesh
 }
 
-png.mesh3d.plot <- function(mesh, landmark = NULL, radius = 0.1) {
-  library(SurfaceReconstruction)
-  library(rgl)
-  
-  if (!inherits(mesh, "mesh3d")) {
-    mesh <- SurfaceReconstruction::AFSreconstruction(as.matrix(mesh[, 1:3]))
-  }
-  
-  open3d()
-  shade3d(mesh, color = "grey70")
-  
-  if (!is.null(landmark)) {
-    spheres3d(landmark, col = "red", radius = radius)
-  }
-  
-}
+                                
+                                
+                                
 
 png.mesh3d.rotate <- function(mesh, angle = 0) {
   Q <- png.create_rotmat3d(angle)
