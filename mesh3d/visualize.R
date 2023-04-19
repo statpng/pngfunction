@@ -22,8 +22,8 @@ png.mesh3d.plot <- function(mesh, type="wire", landmark = NULL, radius = 0.1) {
 
 
 
-png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), method="KNN", k=2){
-  # col_names = c("Voltage", "DF", "LAT", "Smax");  method="KNN"
+png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), keep_columns=c("region"), method="KNN", k=3){
+  # col_names = c("Voltage", "DF", "LAT", "Smax");  method="KNN"; keep_columns=c("region")
   
   # df_nodes <- df_flat_cleaned$nodes
   
@@ -32,17 +32,20 @@ png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT",
   for( i in 1:length(col_names) ){
     col <- col_names[i]
     
-    df_new <- df_nodes %>% select(x,y,col)
+    df_new <- df_nodes %>% select(x,y,col, keep_columns)
     wh.missing <- which(is.na(df_new[col]))
     if(length(wh.missing)>0){
       df_new <- df_new[-wh.missing,]
     }
     
     if( method == "KNN" ){
-      fit <- interpolate_data_KNN(df_new, df_new, col)[[1]]
+      fit <- interpolate_data_KNN(df_new, df_new, col, k=k)[[1]]
+      
     } else if( method == "IDW" ) {
-      fit <- interpolate_data_IDW(df_new, df_new, col, k=k)[[1]]
+      fit <- interpolate_data_IDW(df_new, df_new, col)[[1]]
+
     }
+    
     colnames(fit)[3] <- col
     if( i == 1 ){
       fit <- fit[,1:3]
@@ -54,10 +57,30 @@ png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT",
   }
   
   
+  df_others <- NULL
+  if( length(keep_columns)>0 ){
+    out_others <- NULL
+    for( j in 1:length(keep_columns) ){
+      fit_others <- interpolate_data_KNN(df_new, df_new, keep_columns[j], k=k)[[1]]
+      colnames(fit_others)[3] <- keep_columns[j]
+      out_others[[j]] <- fit_others[keep_columns[j]]
+    }
+    df_others <- dplyr::bind_cols(out_others)
+  }
+  
+  
+  
   out_df <- dplyr::bind_cols(out, .name_repair="minimal")
+  
+  
+  if( !is.null(df_others) ){
+    out_df <- cbind.data.frame(out_df, df_others)
+  }
+  
   
   out_df
 }
+
 
 
 
