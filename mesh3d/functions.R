@@ -6,10 +6,10 @@
 }
 
 
-png.flat.interpolate <- function(nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), method=c("KNN", "IDW")){
+png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), method=c("KNN", "IDW")){
   # col_names = c("Voltage", "DF", "LAT", "Smax");  method="KNN"
   
-  df_nodes <- df_flat_cleaned$nodes
+  # df_nodes <- df_flat_cleaned$nodes
   
   out <- as.list(1:length(col_names))
   names(out) <- col_names
