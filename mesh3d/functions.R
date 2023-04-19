@@ -44,7 +44,7 @@ png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT",
 
 
 
-png.flat.clean <- function(df){
+png.flat.clean <- function(df, type="missing"){
   # df <- df_flat
   nodes <- df$nodes[,1:3]
   edges <- df$edges[,1:3]
@@ -59,6 +59,18 @@ png.flat.clean <- function(df){
   
   edges %>% dim %>% print
   edges_filtered %>% dim %>% print
+  
+  
+  if(type == "na.omit"){
+    n_nodes <- nrow(nodes_filtered)
+    
+    new_idx_for_edges <- sapply(1:n_nodes, function(x) x-sum(outliers<x))
+    
+    n_edges <- nrow(edges_filtered)
+    edges_vec <- unlist(edges_filtered)
+    edges_filtered <- matrix(new_idx_for_edges[edges_vec], nrow=n_edges, ncol=3, byrow=FALSE) %>% as.data.frame
+    nodes_filtered <- nodes_filtered %>% na.omit %>% as.data.frame
+  }
   
   list(nodes=nodes_filtered, edges=edges_filtered)
 }
