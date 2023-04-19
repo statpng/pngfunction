@@ -22,6 +22,45 @@ png.mesh3d.plot <- function(mesh, type="wire", landmark = NULL, radius = 0.1) {
 
 
 
+png.flat.interpolate <- function(df_nodes, col_names = c("Voltage", "DF", "LAT", "Smax"), method="KNN", k=2){
+  # col_names = c("Voltage", "DF", "LAT", "Smax");  method="KNN"
+  
+  # df_nodes <- df_flat_cleaned$nodes
+  
+  out <- as.list(1:length(col_names))
+  names(out) <- col_names
+  for( i in 1:length(col_names) ){
+    col <- col_names[i]
+    
+    df_new <- df_nodes %>% select(x,y,col)
+    wh.missing <- which(is.na(df_new[col]))
+    if(length(wh.missing)>0){
+      df_new <- df_new[-wh.missing,]
+    }
+    
+    if( method == "KNN" ){
+      fit <- interpolate_data_KNN(df_new, df_new, col)[[1]]
+    } else if( method == "IDW" ) {
+      fit <- interpolate_data_IDW(df_new, df_new, col, k=k)[[1]]
+    }
+    colnames(fit)[3] <- col
+    if( i == 1 ){
+      fit <- fit[,1:3]
+    } else {
+      fit <- fit[,3]
+    }
+    
+    out[[i]] <- fit
+  }
+  
+  
+  out_df <- dplyr::bind_cols(out, .name_repair="minimal")
+  
+  out_df
+}
+
+
+
 # Inverse Distance Weighting
 interpolate_data_IDW <- function(person1_data, person2_data, value_column, grid_resolution = 100) {
   library(sp)
