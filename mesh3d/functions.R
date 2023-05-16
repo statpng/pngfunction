@@ -149,7 +149,10 @@ png_read.vtk <- function(filename, from_python = TRUE){
   
   
   num_edges=as.integer(lninfo[3])
-  toupper(readLines(con,1))
+  while(TRUE){
+     tmp_line = toupper(readLines(con,1))
+     if( grepl("CONNECTIVITY", tmp_line) ) break
+  }
   edges = scan(con,what=1.0,n=num_edges,quiet=TRUE)
   
   nodes_df <- matrix(points, ncol=3, byrow=TRUE) %>% as.data.frame
