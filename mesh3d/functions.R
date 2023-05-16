@@ -117,8 +117,10 @@ png_read.vtk <- function(filename, from_python = TRUE){
   
   
   
-  toupper(readLines(con,1))
   triangLine=toupper(readLines(con,1))
+  if( !grepl("POLYGONS", triangLine) ){
+    triangLine=toupper(readLines(con,1))
+  }
   if(length(triangLine)==0){
     warning("No data on polygons found")
     return(NULL)
