@@ -95,6 +95,8 @@
 \usepackage{hyperref}
 %%%%%%%%%
 
+
+% for new command %
 \usepackage{amsfonts}
 \usepackage{amssymb} % for \therefore
 \usepackage{bm} % for bold text
@@ -204,32 +206,40 @@
 \newcommand{\bzero}{\mbox{\pmb {$0$}}}
 \newcommand{\bone}{\mbox{\pmb {$1$}}}
 
-\newcommand{\tbbeta}{  \tilde{\pmb{\beta}} }
-
-
-
-
-
-\newcommand{\A}{ \mathcal{A} }
-\newcommand{\E}{ \mathbb{E} }
-\newcommand{\R}{ \mathbb{R} }
-\newcommand{\N}{ \mathcal{N} }
-\newcommand{\Q}{ \mathcal{Q} }
-\newcommand{\F}{ \mathcal{F} }
-\newcommand{\C}{ \mathcal{C} }
-\newcommand{\G}{ \mathcal{G} }
-\newcommand{\I}{ \mathbb{I} }
-
+\newcommand{\mcA}{ \mathcal{A} }
+\newcommand{\mcB}{ \mathcal{B} }
+\newcommand{\mcC}{ \mathcal{C} }
+\newcommand{\mcD}{ \mathcal{D} }
+\newcommand{\mcE}{ \mathcal{E} }
+\newcommand{\mcF}{ \mathcal{F} }
+\newcommand{\mcG}{ \mathcal{G} }
+\newcommand{\mcH}{ \mathcal{H} }
+\newcommand{\mcI}{ \mathcal{I} }
+\newcommand{\mcJ}{ \mathcal{J} }
+\newcommand{\mcK}{ \mathcal{K} }
 \newcommand{\mcL}{ \mathcal{L} }
-\newcommand{\mbS}{ \mathbb{S} }
+\newcommand{\mcM}{ \mathcal{M} }
+\newcommand{\mcN}{ \mathcal{N} }
 \newcommand{\mcO}{ \mathcal{O} }
-\newcommand{\mcSO}{ \mathcal{SO} }
-\newcommand{\bhA}{ \lfloor\bA\rfloor_\nu }
+\newcommand{\mcP}{ \mathcal{P} }
+\newcommand{\mcQ}{ \mathcal{Q} }
+\newcommand{\mcR}{ \mathcal{R} }
+\newcommand{\mcS}{ \mathcal{S} }
+\newcommand{\mcT}{ \mathcal{T} }
+\newcommand{\mcU}{ \mathcal{U} }
+\newcommand{\mcV}{ \mathcal{V} }
+\newcommand{\mcW}{ \mathcal{W} }
+\newcommand{\mcX}{ \mathcal{X} }
+\newcommand{\mcY}{ \mathcal{Y} }
+\newcommand{\mbZ}{ \mathbb{Z} }
 
-
+\newcommand{\E}{ \mathbb{E} }
+\newcommand{\I}{ \mathbb{I} }
+\newcommand{\R}{ \mathbb{R} }
 
 \newcommand{\df}{ \text{df} }
 \newcommand{\st}{ \text{s.t.} }
+\newcommand{\subjectto}{ \text{ subject to } }
 \newcommand{\rank}{ \text{rank} }
 \newcommand{\row}{ \text{row} }
 \newcommand{\col}{ \text{col} }
@@ -240,14 +250,12 @@
 \newcommand{\rep}{ \text{rep} }
 \newcommand{\unif}{ \text{unif} }
 
-
-\newcommand\bIover[1]{ {\mathbf{I}^{(#1)}} }
-
 \newcommand\argmin[1]{\underset{#1}{\arg \min}~ }
 \newcommand\argmax[1]{\underset{#1}{\arg \max}~ }
 
-\newcommand\undersetbig[2]{\underset{\textstyle #1}{#2}}
 \newcommand\sumsum[1]{ \underset{#1}{\sum\sum} }
+\newcommand\undersetbig[2]{\underset{\textstyle #1}{#2}}
+
 
 
 
