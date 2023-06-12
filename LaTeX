@@ -1,23 +1,63 @@
-%%%%%%%%%%%%
-%% By PNG %%
-%%%%%%%%%%%%
+\documentclass[12pt]{article}
 
-%%%%%%%%%
-%\usepackage[style=science, backend=bibtex]{biblatex}
-%\addbibresource{Bibliography.bib}
-%%%%%%%%%
+\usepackage{kotex}
+
+\usepackage{amsmath}
+\usepackage{graphicx,psfrag,epsf}
+\usepackage{enumerate}
+\usepackage{natbib}
+\usepackage{url} % not crucial - just used below for the URL 
+
+%\pdfminorversion=4
+% NOTE: To produce blinded version, replace "0" with "1" below.
+\newcommand{\blind}{1}
+
+% DON'T change margins - should be 1 inch all around.
+\addtolength{\oddsidemargin}{-.5in}%
+\addtolength{\evensidemargin}{-.5in}%
+\addtolength{\textwidth}{1in}%
+\addtolength{\textheight}{-.3in}%
+\addtolength{\topmargin}{-.8in}%
 
 
-% For Color %
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%  By PNG %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% for multiple columns
+\usepackage{multicol}
+
+
 %
-\usepackage{xcolor}
-%black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, olive, orange, pink, purple, red, teal, violet, white, yellow.
-%
-%%%%%%%%%
+\usepackage{enumitem}
+
+
+% footnote without a mark
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+
+% line breaking in a cell 
+\usepackage{pbox}
+
+% automatic line breaking in a cell 
+\usepackage{tabularx}
+
+
+
+
+% for vertical centering
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
 
 
 % for definition %
-%
+
 % General list of the types of structures associated with each theorem styles (plain, definition, remark)
 %plain 
 %Theorem, Lemma, Corollary, Proposition, Conjecture, Criterion, Assertion
@@ -28,45 +68,36 @@
 %remark 
 %Remark, Note, Notation, Claim, Summary,
 %Acknowledgment, Case, Conclusion
-%
+
 \usepackage{amsthm}
-%
+
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
 \newtheorem{corollary}{Corollary}
-%
+\newtheorem{condition}{Condition}
+
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}
-%
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 %\newtheorem{definition}{Definition}[section]
 %\newtheorem*{definition}{Definition}[section] %no number
-%
-%%%%%%%%%
-
 
 %%%%%%%%%
 
 
 % for algorithm %
-%
 \usepackage{thmtools}
 \usepackage[linesnumbered,ruled]{algorithm2e}
 \usepackage{hyperref}
-%
 %%%%%%%%%
 
-
-
-
-%%%%%%%%%
 \usepackage{amsfonts}
 \usepackage{amssymb} % for \therefore
 \usepackage{bm} % for bold text
-
 
 \newcommand{\ba}{  \pmb{a} }
 \newcommand{\bb}{  \pmb{b} }
@@ -178,9 +209,9 @@
 
 
 
+
 \newcommand{\A}{ \mathcal{A} }
 \newcommand{\E}{ \mathbb{E} }
-%\newcommand{\L}{ \mathcal{L} }
 \newcommand{\R}{ \mathbb{R} }
 \newcommand{\N}{ \mathcal{N} }
 \newcommand{\Q}{ \mathcal{Q} }
@@ -188,6 +219,13 @@
 \newcommand{\C}{ \mathcal{C} }
 \newcommand{\G}{ \mathcal{G} }
 \newcommand{\I}{ \mathbb{I} }
+
+\newcommand{\mcL}{ \mathcal{L} }
+\newcommand{\mbS}{ \mathbb{S} }
+\newcommand{\mcO}{ \mathcal{O} }
+\newcommand{\mcSO}{ \mathcal{SO} }
+\newcommand{\bhA}{ \lfloor\bA\rfloor_\nu }
+
 
 
 \newcommand{\df}{ \text{df} }
@@ -199,6 +237,9 @@
 \newcommand{\tr}{ \text{tr} }
 \newcommand{\sign}{ \text{sign} }
 \newcommand{\vectorize}{ \text{vec} }
+\newcommand{\rep}{ \text{rep} }
+\newcommand{\unif}{ \text{unif} }
+
 
 \newcommand\bIover[1]{ {\mathbf{I}^{(#1)}} }
 
@@ -209,4 +250,31 @@
 \newcommand\sumsum[1]{ \underset{#1}{\sum\sum} }
 
 
-%%%%%%%%%
+
+%\usepackage[style=science, backend=bibtex]{biblatex}
+%\addbibresource{Bibliography.bib}
+
+
+
+
+\usepackage{xcolor}
+%black, blue, brown, cyan, darkgray, gray, green, lightgray, lime, magenta, olive, orange, pink, purple, red, teal, violet, white, yellow.
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+	
+  test
+	
+	\clearpage
+	%	\bibliographystyle{abbrvnat}
+	\bibliographystyle{agsm}
+	
+	\bibliography{Bibliography}
+	
+	
+\end{document}
