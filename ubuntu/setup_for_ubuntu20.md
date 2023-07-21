@@ -39,6 +39,8 @@ sudo apt-get install -y libzmq3-dev libharfbuzz-dev libfribidi-dev libfreetype6-
 ```
 install.packages(c("tidyverse", "purrr", "parallel", "dplyr", "ggplot2"))
 install.packages(c("dirmult", "Ternary", "reshape2", "Rtsne", "mnormt", "quadprog", "compositions", "glmnet"))
+
+install.packages(c("ggplot2"), dependencies = TRUE, INSTALL_opts = "--no-lock")
 ```
 
 ```
