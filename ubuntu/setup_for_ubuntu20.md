@@ -41,4 +41,9 @@ install.packages(c("tidyverse", "purrr", "parallel", "dplyr", "ggplot2"))
 install.packages(c("dirmult", "Ternary", "reshape2", "Rtsne", "mnormt", "quadprog", "compositions", "glmnet"))
 ```
 
+```
+sudo apt-get install r-cran-ggplot2
+sudo apt-get install r-cran-plyr
+sudo apt-get install r-cran-reshape2
+```
 
