@@ -27,6 +27,7 @@ sudo gdebi rstudio-server-2023.06.1-524-amd64.deb
 ```
 sudo apt-get install -y htop
 sudo apt-get install -y net-tools
+sudo apt-get install -y git
 sudo apt-get install -y build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev libfontconfig1-dev
 sudo apt-get install -y libzmq3-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev build-essential libcurl4-openssl-dev libxml2-dev libssl-dev libfontconfig1-dev
 ```
