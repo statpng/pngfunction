@@ -32,3 +32,13 @@ sudo apt-get install -y build-essential libcurl4-gnutls-dev libxml2-dev libssl-d
 sudo apt-get install -y libzmq3-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev build-essential libcurl4-openssl-dev libxml2-dev libssl-dev libfontconfig1-dev
 ```
 
+
+
+### R packages
+
+```
+install.packages(c("tidyverse", "purrr", "parallel", "dplyr", "ggplot2"))
+install.packages(c("dirmult", "Ternary", "reshape2", "Rtsne", "mnormt", "quadprog", "compositions", "glmnet"))
+```
+
+
